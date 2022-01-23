@@ -1,0 +1,15 @@
+Package: r.oguelike
+Title: Play a Roguelike Game In The Console
+Version: 0.0.0.9000
+Authors@R:
+    person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
+Description: Play a game in the console that records your inputs to move a
+    player around a generated world. Inspired heavily by roguelike games, 
+    particularly Rogue (1980) itself.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    keypress
