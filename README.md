@@ -30,7 +30,7 @@ r.oguelike::start_game()
     # . . . . . . . # 
     # . . . . . . . # 
     # . . . @ . . . # 
-    # . . . . . . . # 
+    # . $ . . . . . # 
     # . . . . . . . # 
     # # # # # # # # # 
     Use arrow keys
@@ -46,7 +46,7 @@ So, you can press the left-arrow key and this will happen:
     # . . . . . . . # 
     # . . . . . . . # 
     # . . @ . . . . # 
-    # . . . . . . . # 
+    # . $ . . . . . # 
     # . . . . . . . # 
     # # # # # # # # # 
     Use arrow keys

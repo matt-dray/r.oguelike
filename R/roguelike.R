@@ -149,7 +149,7 @@ start_game <- function(max_turns = Inf) {
   room <- .make_room()
   .cat_room(room)
 
-  gold <- 10
+  gold <- 0
   turns <- 0
 
   while (turns < max_turns) {
