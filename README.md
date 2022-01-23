@@ -33,6 +33,7 @@ r.oguelike::start_game()
     # . $ . . . . . # 
     # . . . . . . . # 
     # # # # # # # # # 
+    Turns: 0 | Gold: 0 
     Use arrow keys
 
 If you’re using a terminal that supports [the {keypress}
@@ -40,7 +41,12 @@ package](https://github.com/gaborcsardi/keypress), then you can move the
 player character (`@`) with your arrow keys around the room tiles (`.`),
 within the walls (`#`).
 
-So, you can press the left-arrow key and this will happen:
+If playing in a {keypress}-unsupported terminal, like RStudio, then
+you’ll be prompted to type the direction (e.g. `left`) then the enter
+key. Use `keypress::has_keypress_support()` to see if your terminal
+supports {keypress}.
+
+So, going left moves you one tile to the left:
 
     # # # # # # # # # 
     # . . . . . . . # 
@@ -49,12 +55,10 @@ So, you can press the left-arrow key and this will happen:
     # . $ . . . . . # 
     # . . . . . . . # 
     # # # # # # # # # 
+    Turns: 1 | Gold: 0
     Use arrow keys
 
-If playing in an unsupported terminal, like RStudio, then you’ll be
-prompted to type the direction (e.g. `left`). Use
-`keypress::has_keypress_support()` to see if your terminal supports
-{keypress}.
+What happens when you touch the `$` symbol?
 
 ## Code of Conduct
 
