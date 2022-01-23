@@ -1,4 +1,24 @@
 
+.add_gold <- function(room_2d, room_x, room_y) {
+
+  gold_x <- sample(2:(room_x - 1), 1)
+  gold_y <- sample(2:(room_y - 1), 1)
+  room_2d[gold_x, gold_y] <- "$"
+
+  return(room_2d)
+
+}
+
+.add_player <- function(room_2d, room_x, room_y) {
+
+  player_x <- sample(2:(room_x - 1), 1)
+  player_y <- sample(2:(room_y - 1), 1)
+  room_2d[player_x, player_y] <- "@"
+
+  return(room_2d)
+
+}
+
 .make_room <- function(room_size_limit = 6:10) {
 
   room_x <- sample(room_size_limit, 1)
@@ -12,9 +32,8 @@
   room_2d[c(1, nrow(room_2d)), ] <- "#"
   room_2d[, c(1, ncol(room_2d))] <- "#"
 
-  player_x <- sample(2:(room_x - 1), 1)
-  player_y <- sample(2:(room_y - 1), 1)
-  room_2d[player_x, player_y] <- "@"
+  room_2d <- .add_gold(room_2d, room_x, room_y)
+  room_2d <- .add_player(room_2d, room_x, room_y)
 
   return(room_2d)
 
@@ -28,13 +47,17 @@
 
 }
 
-.move_player <- function(room) {
+.move_player <- function(room, turns, gold) {
 
-  room_y_max <- nrow(room)
+  stats <- paste("Turns:", turns, "| Gold:", gold, "\n")
+  cat(stats)
+
+
   player_loc <- which(room == "@")
   room[player_loc] <- "."
+  room_y_max <- nrow(room)
 
-  keypress_support<- keypress::has_keypress_support()
+  keypress_support <- keypress::has_keypress_support()
 
   if (keypress_support) {
     cat("Use arrow keys")
@@ -124,14 +147,24 @@ start_game <- function(max_turns = Inf) {
   }
 
   room <- .make_room()
-
   .cat_room(room)
 
+  gold <- 10
   turns <- 0
 
   while (turns < max_turns) {
 
-    room <- .move_player(room)
+    gold_loc <- which(room == "$")
+
+    room <- .move_player(room, turns, gold)
+
+    player_loc <- which(room == "@")
+
+    if (length(gold_loc) != 0) {
+      if (player_loc == gold_loc) {
+        gold <- gold + sample(1:10, 1)
+      }
+    }
 
     turns <- turns + 1
 
