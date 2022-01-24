@@ -6,7 +6,7 @@
 \alias{r.oguelike-package}
 \title{r.oguelike: Play a Roguelike Game In The Console}
 \description{
-Play a game in the console that records your inputs to move a player around a generated world. Inspired heavily by roguelike games, particularly Rogue (1980) itself.
+Play a simple ASCII game in the console inspired heavily by roguelike games, particularly Rogue (1980) itself.
 }
 \author{
 \strong{Maintainer}: Matt Dray \email{mwdray@gmail.com}

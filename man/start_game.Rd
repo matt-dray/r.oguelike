@@ -10,17 +10,27 @@ start_game(max_turns = Inf)
 \item{max_turns}{Numeric. How many turns? Default \code{Inf}.}
 }
 \value{
-Nothing. Clears the console and prints to the console with
-\code{cat}.
+Nothing. Clears the console and prints to it with \code{cat}.
 }
 \description{
 Clears the console and starts a game of 'r.oguelike'.
 }
 \details{
 If your terminal supports the 'keypress' package, then you can use
-single keypresses as input, otherwise you will have to type words at the
-prompt. Use \code{\link[keypress]{has_keypress_support}} to see if
-'keypress' is supported.
+a single keypresses as input (e.g. the up arrow key), otherwise you will
+have to type words at the prompt. Use
+\code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
+supported.
+
+Symbols are as follows:
+\itemize{
+\item{\code{.}} {tile}
+\item{\code{#}} {wall}
+\item{\code{@}} {player}
+\item{\code{$}} {gold (+1 to +3 G)}
+\item{\code{E}} {enemy (-1 HP)}
+\item{\code{a}} {food (+1 HP)}
+}
 }
 \examples{
 \dontrun{start_game()}
