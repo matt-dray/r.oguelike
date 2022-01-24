@@ -27,13 +27,13 @@ r.oguelike::start_game()
 ```
 
     # # # # # # # # # 
-    # . . . . . . . # 
+    # . . . . E . . # 
     # . . . . . . . # 
     # . . . @ . . . # 
-    # . $ . . . . . # 
+    # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    Turns: 0 | Gold: 0 
+    HP: 10 | G: 0 
     Use arrow keys
 
 If you’re using a terminal that supports [the {keypress}
@@ -49,16 +49,20 @@ supports {keypress}.
 So, going left moves you one tile to the left:
 
     # # # # # # # # # 
-    # . . . . . . . # 
+    # . . . . E . . # 
     # . . . . . . . # 
     # . . @ . . . . # 
-    # . $ . . . . . # 
+    # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    Turns: 1 | Gold: 0
+    HP: 10 | G: 0
     Use arrow keys
 
-What happens when you touch the `$` symbol?
+Collect the gold (`$`). Stomp an enemy (`E`) and replenish health by
+collecting an apple (`a`).
+
+Future developments include an inventory system, randomised dungeons and
+turn-based battles.
 
 ## Code of Conduct
 
