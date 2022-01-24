@@ -1,24 +1,23 @@
 
-.add_gold <- function(room_2d, room_x, room_y) {
+#' Add Objects To A Room
+#' @param object Character. Object to place.
+#' @param room Matrix. 2D room layout.
+#' @noRd
+.add_object <- function(room, object = c("@", "$", "E")) {
 
-  gold_x <- sample(2:(room_x - 1), 1)
-  gold_y <- sample(2:(room_y - 1), 1)
-  room_2d[gold_x, gold_y] <- "$"
+  object <- match.arg(object)
 
-  return(room_2d)
+  empty_tiles <- which(room == ".")
+  sample_tile <- sample(empty_tiles, 1)
+  room[sample_tile] <- object
 
-}
-
-.add_player <- function(room_2d, room_x, room_y) {
-
-  player_x <- sample(2:(room_x - 1), 1)
-  player_y <- sample(2:(room_y - 1), 1)
-  room_2d[player_x, player_y] <- "@"
-
-  return(room_2d)
+  return(room)
 
 }
 
+#' Generate A Room From Sampled Dimensions
+#' @param what Numeric vector. Values that room height and width can take.
+#' @noRd
 .make_room <- function(room_size_limit = 6:10) {
 
   room_x <- sample(room_size_limit, 1)
@@ -32,13 +31,17 @@
   room_2d[c(1, nrow(room_2d)), ] <- "#"
   room_2d[, c(1, ncol(room_2d))] <- "#"
 
-  room_2d <- .add_gold(room_2d, room_x, room_y)
-  room_2d <- .add_player(room_2d, room_x, room_y)
+  room_2d <- .add_object(room_2d, "$")
+  room_2d <- .add_object(room_2d, "E")
+  room_2d <- .add_object(room_2d, "@")
 
   return(room_2d)
 
 }
 
+#' Concatenate And Print A Room Matrix
+#' @param room Matrix. 2D room layout.
+#' @noRd
 .cat_room <- function(room) {
 
   for (i in 1:nrow(room)) {
@@ -47,11 +50,15 @@
 
 }
 
+#' Concatenate And Print A Room Matrix
+#' @param room Matrix. 2D room layout.
+#' @param turns NUmeric. Starting amount of turns.
+#' @param gold Numeric. Starting amount of turns
+#' @noRd
 .move_player <- function(room, turns, gold) {
 
   stats <- paste("Turns:", turns, "| Gold:", gold, "\n")
   cat(stats)
-
 
   player_loc <- which(room == "@")
   room[player_loc] <- "."
@@ -122,7 +129,8 @@
 #'
 #' @details If your terminal supports the 'keypress' package, then you can use
 #'   single keypresses as input, otherwise you will have to type words at the
-#'   prompt.
+#'   prompt. Use \code{\link[keypress]{has_keypress_support}} to see if
+#'   'keypress' is supported.
 #'
 #' @return Nothing. Clears the console and prints to the console with
 #'   \code{cat}.
@@ -161,9 +169,11 @@ start_game <- function(max_turns = Inf) {
     player_loc <- which(room == "@")
 
     if (length(gold_loc) != 0) {
+
       if (player_loc == gold_loc) {
         gold <- gold + sample(1:10, 1)
       }
+
     }
 
     turns <- turns + 1

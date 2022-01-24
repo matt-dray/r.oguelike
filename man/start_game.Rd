@@ -19,7 +19,8 @@ Clears the console and starts a game of 'r.oguelike'.
 \details{
 If your terminal supports the 'keypress' package, then you can use
 single keypresses as input, otherwise you will have to type words at the
-prompt.
+prompt. Use \code{\link[keypress]{has_keypress_support}} to see if
+'keypress' is supported.
 }
 \examples{
 \dontrun{start_game()}
