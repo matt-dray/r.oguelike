@@ -17,7 +17,7 @@ game](https://en.wikipedia.org/wiki/Roguelike) for R.
 You can install the {r.oguelike} package from GitHub:
 
 ``` r
-remotes::install_github("matt.dray/r.oguelike")
+remotes::install_github("matt-dray/r.oguelike")
 ```
 
 To begin:
