@@ -87,13 +87,35 @@
   while(!legal_key) {
 
     if (keypress_support) {
+
       kp <- keypress::keypress()
+
+      kp <- switch(
+        kp,
+        "w" = "up",
+        "s" = "down",
+        "a" = "left",
+        "d" = "right"
+      )
+
       legal_key <- TRUE
+
     }
 
     if (!keypress_support) {
-      kp <- readline("Direction (up, down, left, right): ")
+
+      kp <- readline("Move (W, A, S, D): ")
+
+      kp <- switch(
+        kp,
+        "w" = "up",
+        "s" = "down",
+        "a" = "left",
+        "d" = "right"
+      )
+
       legal_key <- TRUE
+
     }
 
   }

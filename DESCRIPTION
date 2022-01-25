@@ -1,10 +1,10 @@
 Package: r.oguelike
 Title: Play a Roguelike Game In The Console
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R:
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
 Description: Play a simple ASCII game in the console inspired heavily by
-    roguelike games, particularly Rogue (1980) itself.
+    roguelike games, particularly Rogue (1980) itself. Work in progress.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

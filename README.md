@@ -8,13 +8,15 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-
+[![R-CMD-check](https://github.com/matt-dray/r.oguelike/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/r.oguelike/actions)
+[![](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
 <!-- badges: end -->
 
 A (work-in-progress) text-based [roguelike
-game](https://en.wikipedia.org/wiki/Roguelike) for R.
+game](https://en.wikipedia.org/wiki/Roguelike) for R. A learning process
+to build a gameplay ‘engine’ from the ground up.
 
-You can install the {r.oguelike} package from GitHub:
+You can install the in-development {r.oguelike} package from GitHub:
 
 ``` r
 remotes::install_github("matt-dray/r.oguelike")
@@ -34,17 +36,20 @@ r.oguelike::start_game()
     # . . . . . . . # 
     # # # # # # # # # 
     HP: 10 | G: 0 
-    Use arrow keys
+    Start game
 
 If you’re using a terminal that supports [the {keypress}
 package](https://github.com/gaborcsardi/keypress), then you can move the
-player character (`@`) with your arrow keys around the room tiles (`.`),
-within the walls (`#`).
+player character (`@`) with your arrow keys (or [WASD
+keys](https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys)) around the
+room tiles (`.`) of the randomly-generated room, staying within the
+walls (`#`).
 
 If playing in a {keypress}-unsupported terminal, like RStudio, then
-you’ll be prompted to type the direction (e.g. `left`) then the enter
-key. Use `keypress::has_keypress_support()` to see if your terminal
-supports {keypress}.
+you’ll be prompted to type the direction ([WASD
+keys](https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys)) then hit the
+enter key. Use `keypress::has_keypress_support()` to see if your
+terminal supports {keypress}.
 
 So, going left moves you one tile to the left:
 
@@ -56,7 +61,7 @@ So, going left moves you one tile to the left:
     # . . . . . . . # 
     # # # # # # # # # 
     HP: 10 | G: 0
-    Use arrow keys
+    Moved left
 
 Collect the gold (`$`). Stomp an enemy (`E`) and replenish health by
 collecting an apple (`a`).
