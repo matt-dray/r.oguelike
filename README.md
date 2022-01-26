@@ -9,6 +9,8 @@
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![R-CMD-check](https://github.com/matt-dray/r.oguelike/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/r.oguelike/actions)
+[![Launch Rstudio
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio)
 [![](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
 <!-- badges: end -->
 
@@ -21,6 +23,10 @@ You can install the in-development {r.oguelike} package from GitHub:
 ``` r
 remotes::install_github("matt-dray/r.oguelike")
 ```
+
+Or, [you can launch an instance of RStudio in the
+browser](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio)
+thanks to [Binder](https://mybinder.org/).
 
 To begin:
 
