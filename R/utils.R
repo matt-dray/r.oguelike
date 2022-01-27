@@ -82,20 +82,30 @@
 
   keypress_support <- keypress::has_keypress_support()
 
+  wasd_keys <- c("w", "a", "s", "d")
+  udlr_keys <- c("up", "down", "left", "right")
+
   legal_key <- FALSE
 
-  while(!legal_key) {
+  while (!legal_key) {
 
     if (keypress_support) {
 
       kp <- keypress::keypress()
 
-      if (kp == "w") { kp <- "up" }
-      if (kp == "s") { kp <- "down" }
-      if (kp == "a") { kp <- "left" }
-      if (kp == "d") { kp <- "right" }
+      if (kp %in% wasd_keys) {
+        kp <- switch(
+          kp,
+          "w" = "up",
+          "s" = "down",
+          "a" = "left",
+          "d" = "right"
+        )
+      }
 
-      legal_key <- TRUE
+      if (kp %in% udlr_keys) {
+        legal_key <- TRUE
+      }
 
     }
 
@@ -103,15 +113,19 @@
 
       kp <- readline("Move (W, A, S, D): ")
 
-      kp <- switch(
-        kp,
-        "w" = "up",
-        "s" = "down",
-        "a" = "left",
-        "d" = "right"
-      )
+      if (kp %in% wasd_keys) {
+        kp <- switch(
+          kp,
+          "w" = "up",
+          "s" = "down",
+          "a" = "left",
+          "d" = "right"
+        )
+      }
 
-      legal_key <- TRUE
+      if (kp %in% udlr_keys) {
+        legal_key <- TRUE
+      }
 
     }
 
@@ -123,7 +137,8 @@
 
 #' Move Player Character And Increment Counters
 #' @param room Matrix. 2D room layout.
-#' @param keypress Character.
+#' @param kp Character. Outcome of keypress input (i.e. 'up', 'down', 'left',
+#'   'right').
 #' @noRd
 .move_player <- function(room, kp = c("up", "down", "left", "right")) {
 
