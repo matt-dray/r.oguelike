@@ -1,3 +1,8 @@
+# r.oguelike 0.0.0.9003
+
+* Added simple inventory system for collecting apples and using them when you want in the overworld by pressing `1`.
+* Added better defense of user inputs.
+
 # r.oguelike 0.0.0.9002
 
 * Split out internal functions into `utils.R`.
