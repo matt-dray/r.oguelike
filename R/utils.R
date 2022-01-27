@@ -90,13 +90,10 @@
 
       kp <- keypress::keypress()
 
-      kp <- switch(
-        kp,
-        "w" = "up",
-        "s" = "down",
-        "a" = "left",
-        "d" = "right"
-      )
+      if (kp == "w") { kp <- "up" }
+      if (kp == "s") { kp <- "down" }
+      if (kp == "a") { kp <- "left" }
+      if (kp == "d") { kp <- "right" }
 
       legal_key <- TRUE
 

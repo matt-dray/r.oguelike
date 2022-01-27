@@ -33,7 +33,7 @@ You can install the in-development {r.oguelike} package from GitHub:
 remotes::install_github("matt-dray/r.oguelike")
 ```
 
-Or, [you can launch an instance of RStudio in the browser](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio) thanks to [Binder](https://mybinder.org/).
+Or [you can launch an instance of RStudio in the browser](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio), thanks to [Binder](https://mybinder.org/), with {r.oguelike} preinstalled.
 
 To begin:
 
