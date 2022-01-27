@@ -68,10 +68,11 @@
 #' @param turns Numeric. Count of turns taken.
 #' @param hp Numeric. Count of HP remaining
 #' @param gold Numeric. Count of gold accumulated.
+#' @param food Numeric. Count of food accumulated.
 #' @noRd
-.cat_stats <- function(turns, hp, gold) {
+.cat_stats <- function(turns, hp, gold, food) {
 
-  stats <- paste("HP:", hp, "| G:", gold, "\n")
+  stats <- paste("HP:", hp, "| G:", gold, "| A:", food, "\n")
   cat(stats)
 
 }
@@ -82,8 +83,9 @@
 
   keypress_support <- keypress::has_keypress_support()
 
-  wasd_keys <- c("w", "a", "s", "d")
-  udlr_keys <- c("up", "down", "left", "right")
+  wasd_kps <- c("w", "a", "s", "d")
+  udlr_kps <- c("up", "down", "left", "right")
+  inv_kps  <- "1"
 
   legal_key <- FALSE
 
@@ -93,7 +95,7 @@
 
       kp <- keypress::keypress()
 
-      if (kp %in% wasd_keys) {
+      if (kp %in% wasd_kps) {
         kp <- switch(
           kp,
           "w" = "up",
@@ -103,7 +105,7 @@
         )
       }
 
-      if (kp %in% udlr_keys) {
+      if (kp %in% c(udlr_kps, inv_kps)) {
         legal_key <- TRUE
       }
 
@@ -111,9 +113,9 @@
 
     if (!keypress_support) {
 
-      kp <- readline("Move (W, A, S, D): ")
+      kp <- readline("Input: ")
 
-      if (kp %in% wasd_keys) {
+      if (kp %in% wasd_kps) {
         kp <- switch(
           kp,
           "w" = "up",
@@ -123,7 +125,7 @@
         )
       }
 
-      if (kp %in% udlr_keys) {
+      if (kp %in% c(udlr_kps, inv_kps)) {
         legal_key <- TRUE
       }
 
