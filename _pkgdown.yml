@@ -1,0 +1,9 @@
+template:
+  bootstrap: 5
+  bslib:
+    bg: "#333333"
+    fg: "#eeeeee"
+    primary: "#8fce00"
+    base_font: {google: "Courier Prime"}
+    heading_font: {google: "Courier Prime"}
+    code_font: {google: "Courier Prime"}
