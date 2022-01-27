@@ -42,7 +42,7 @@ r.oguelike::start_game()
     # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    HP: 10 | G: 0 
+    HP: 10 | G: 0 | A: 0
     Start game
 
 If you’re using a terminal that supports [the {keypress}
@@ -67,11 +67,11 @@ So, going left moves you one tile to the left:
     # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    HP: 10 | G: 0
+    HP: 10 | G: 0 | A: 0
     Moved left
 
-Collect the gold (`$`). Stomp an enemy (`E`) and replenish health by
-collecting an apple (`a`).
+Collect the gold (`$`). Stomp an enemy (`E`). Collect an apple (`a`) for
+your inventory, then eat it with a keypress input of `1`.
 
 Future developments include an inventory system, randomised dungeons and
 turn-based battles.

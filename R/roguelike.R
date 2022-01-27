@@ -43,12 +43,13 @@ start_game <- function(max_turns = Inf) {
   }
 
   turns <- 0
-  gold  <- 0
   hp    <- 10
+  gold  <- 0
+  food  <- 0
 
   room <- .make_room()
   .cat_room(room)
-  .cat_stats(turns, hp, gold)
+  .cat_stats(turns, hp, gold, food)
   cat("Start game")
 
   while (turns < max_turns) {
@@ -58,9 +59,26 @@ start_game <- function(max_turns = Inf) {
     food_loc  <- which(room == "a")
 
     kp <- .accept_keypress()
+
+    if (kp == "1" & food > 0) {
+
+      food <- food - 1
+
+      hp <- hp + 1
+
+      if (hp > 10) {
+        hp <- 10
+      }
+
+      msg <- "Ate apple (+1 HP)"
+
+    }
+
     room <- .move_player(room, kp)
 
-    msg <- paste("Moved", kp)
+    if (kp != "1") {
+      msg <- paste("Moved", kp)
+    }
 
     player_loc <- which(room == "@")
 
@@ -94,13 +112,9 @@ start_game <- function(max_turns = Inf) {
 
       if (player_loc == food_loc) {
 
-        hp <- hp + 1
+        food <- food + 1
 
-        if (hp > 10) {
-          hp <- 10
-        }
-
-        msg <- "Ate apple (+1 HP)"
+        msg <- "Collected apple (+1 A)"
 
       }
 
@@ -117,7 +131,7 @@ start_game <- function(max_turns = Inf) {
     }
 
     .cat_room(room)
-    .cat_stats(turns, hp, gold)
+    .cat_stats(turns, hp, gold, food)
     cat(msg)
 
   }

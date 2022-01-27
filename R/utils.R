@@ -68,10 +68,11 @@
 #' @param turns Numeric. Count of turns taken.
 #' @param hp Numeric. Count of HP remaining
 #' @param gold Numeric. Count of gold accumulated.
+#' @param food Numeric. Count of food accumulated.
 #' @noRd
-.cat_stats <- function(turns, hp, gold) {
+.cat_stats <- function(turns, hp, gold, food) {
 
-  stats <- paste("HP:", hp, "| G:", gold, "\n")
+  stats <- paste("HP:", hp, "| G:", gold, "| A:", food, "\n")
   cat(stats)
 
 }
@@ -82,36 +83,51 @@
 
   keypress_support <- keypress::has_keypress_support()
 
+  wasd_kps <- c("w", "a", "s", "d")
+  udlr_kps <- c("up", "down", "left", "right")
+  inv_kps  <- "1"
+
   legal_key <- FALSE
 
-  while(!legal_key) {
+  while (!legal_key) {
 
     if (keypress_support) {
 
       kp <- keypress::keypress()
 
-      if (kp == "w") { kp <- "up" }
-      if (kp == "s") { kp <- "down" }
-      if (kp == "a") { kp <- "left" }
-      if (kp == "d") { kp <- "right" }
+      if (kp %in% wasd_kps) {
+        kp <- switch(
+          kp,
+          "w" = "up",
+          "s" = "down",
+          "a" = "left",
+          "d" = "right"
+        )
+      }
 
-      legal_key <- TRUE
+      if (kp %in% c(udlr_kps, inv_kps)) {
+        legal_key <- TRUE
+      }
 
     }
 
     if (!keypress_support) {
 
-      kp <- readline("Move (W, A, S, D): ")
+      kp <- readline("Input: ")
 
-      kp <- switch(
-        kp,
-        "w" = "up",
-        "s" = "down",
-        "a" = "left",
-        "d" = "right"
-      )
+      if (kp %in% wasd_kps) {
+        kp <- switch(
+          kp,
+          "w" = "up",
+          "s" = "down",
+          "a" = "left",
+          "d" = "right"
+        )
+      }
 
-      legal_key <- TRUE
+      if (kp %in% c(udlr_kps, inv_kps)) {
+        legal_key <- TRUE
+      }
 
     }
 
@@ -123,7 +139,8 @@
 
 #' Move Player Character And Increment Counters
 #' @param room Matrix. 2D room layout.
-#' @param keypress Character.
+#' @param kp Character. Outcome of keypress input (i.e. 'up', 'down', 'left',
+#'   'right').
 #' @noRd
 .move_player <- function(room, kp = c("up", "down", "left", "right")) {
 
