@@ -2,6 +2,7 @@
 
 * Added simple inventory system for collecting apples and using them when you want in the overworld by pressing `1`.
 * Added better defense of user inputs.
+* Added {pkgdown} site and GitHub Action.
 
 # r.oguelike 0.0.0.9002
 
