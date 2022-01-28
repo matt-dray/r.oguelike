@@ -72,8 +72,8 @@
 #' @noRd
 .cat_stats <- function(turns, hp, gold, food) {
 
-  stats <- paste("HP:", hp, "| G:", gold, "| A:", food, "\n")
-  cat(stats)
+  stats <- paste("T:", turns, "| HP:", hp, "| G:", gold, "| A:", food)
+  message(stats)
 
 }
 

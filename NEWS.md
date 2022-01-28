@@ -1,6 +1,14 @@
+# r.oguelike 0.0.0.9004
+
+* Add enemy HP and attack.
+* Add autobattle state.
+* Use `is_alive` status to determine game state; use turn count and HP to end game.
+* Prevent apple consumption if max HP or if apple inventory is empty.
+
+
 # r.oguelike 0.0.0.9003
 
-* Added simple inventory system for collecting apples and using them when you want in the overworld by pressing `1`.
+* Added simple inventory system for collecting apples and using them in the overworld by pressing `1`.
 * Added better defense of user inputs.
 * Added {pkgdown} site and GitHub Action.
 

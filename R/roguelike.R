@@ -1,31 +1,34 @@
 
-#' Start A 'r.oguelike' Game
+#' Play A 'r.oguelike' Game
 #'
-#' Clears the console and starts a game of 'r.oguelike'.
+#' Clears the console and starts a game of 'r.oguelike'. The user inputs a
+#' keypress to move the character and interact with the game.
 #'
-#' @param max_turns Numeric. How many turns? Default \code{Inf}.
+#' @param max_turns Numeric. How many turns? Default is 25.
 #'
-#' @details If your terminal supports the 'keypress' package, then you can use
-#'   a single keypresses as input (e.g. the up arrow key), otherwise you will
-#'   have to type words at the prompt. Use
-#'   \code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
+#' @details
+#'   Use the WASD keys to move up, left, down and right. Use the '1' key to eat
+#'   an apple from your inventory. If your terminal supports the 'keypress'
+#'   package, then you can use a single keypress as input (e.g. the up arrow
+#'   key), otherwise you will have to type at the prompt and then press 'Enter'.
+#'   Use \code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
 #'   supported.
 #'
-#'   Symbols are as follows:
+#'   Symbols used in the game are as follows:
 #'   \itemize{
-#'     \item{\code{.}} {tile}
+#'     \item{\code{.}} {floor tile}
 #'     \item{\code{#}} {wall}
-#'     \item{\code{@}} {player}
+#'     \item{\code{@}} {player (10 HP max, -1 HP attack damage)}
 #'     \item{\code{$}} {gold (+1 to +3 G)}
-#'     \item{\code{E}} {enemy (-1 HP)}
-#'     \item{\code{a}} {food (+1 HP)}
+#'     \item{\code{E}} {enemy (3 HP max, -1 HP attack damage)}
+#'     \item{\code{a}} {apple (+1 HP)}
 #'   }
 #'
 #' @return Nothing. Clears the console and prints to it with \code{cat}.
 #' @export
 #'
 #' @examples \dontrun{start_game()}
-start_game <- function(max_turns = Inf) {
+start_game <- function(max_turns = 25) {
 
   if (!inherits(max_turns, "numeric")) {
     "Argument 'max_turns' must be a single numeric value.\n"
@@ -34,25 +37,34 @@ start_game <- function(max_turns = Inf) {
   keypress_support <- keypress::has_keypress_support()
   in_rstudio <- Sys.getenv("RSTUDIO") == "1"
 
-  if (keypress_support) {
-    system2("clear")
-  }
-
-  if (in_rstudio) {
-    cat("\014")
-  }
-
-  turns <- 0
-  hp    <- 10
-  gold  <- 0
-  food  <- 0
-
   room <- .make_room()
-  .cat_room(room)
-  .cat_stats(turns, hp, gold, food)
-  cat("Start game")
 
-  while (turns < max_turns) {
+  turns  <- max_turns
+  hp     <- 10
+  max_hp <- 10
+  gold   <- 0
+  food   <- 0
+
+  enemy_hp  <- sample(3:5, 1)
+  enemy_atk <- 1
+
+  msg <- "Press key to start"
+
+  is_alive <- TRUE
+
+  while (is_alive) {
+
+    if (keypress_support) {
+      system2("clear")
+    }
+
+    if (in_rstudio) {
+      cat("\014")
+    }
+
+    .cat_room(room)
+    .cat_stats(turns, hp, gold, food)
+    message(msg)
 
     gold_loc  <- which(room == "$")
     enemy_loc <- which(room == "E")
@@ -60,17 +72,25 @@ start_game <- function(max_turns = Inf) {
 
     kp <- .accept_keypress()
 
-    if (kp == "1" & food > 0) {
+    if (kp == "1") {
 
-      food <- food - 1
-
-      hp <- hp + 1
-
-      if (hp > 10) {
-        hp <- 10
+      if (food == 0) {
+        msg <- "You have no apples."
       }
 
-      msg <- "Ate apple (+1 HP)"
+      if (food > 0) {
+
+        if (hp < max_hp) {
+          food <- food - 1
+          hp <- hp + 1
+          msg <- "Ate apple (+1 HP)"
+        }
+
+        if (hp == max_hp) {
+          msg <- "Already max HP. Save it!"
+        }
+
+      }
 
     }
 
@@ -100,9 +120,28 @@ start_game <- function(max_turns = Inf) {
 
       if (player_loc == enemy_loc) {
 
-        hp <- hp - 1
+        is_battle <- TRUE
+        start_hp <- hp
 
-        msg <- "Struck by enemy (-1 HP)"
+        while (is_battle) {
+
+          enemy_hp <- enemy_hp - 1
+
+          if (enemy_hp == 0) {
+            msg <- paste0("You win! (-", start_hp - hp," HP)")
+            is_battle <- FALSE
+          }
+
+          hp <- hp - enemy_atk
+          turns <- turns - 1
+
+          if (hp == 0) {
+            msg <- paste0("You died (0 HP)! Try again.")
+            is_battle <- FALSE
+            is_alive <- FALSE
+          }
+
+        }
 
       }
 
@@ -120,19 +159,12 @@ start_game <- function(max_turns = Inf) {
 
     }
 
-    turns <- turns + 1
+    turns <- turns - 1
 
-    if (keypress_support) {
-      system2("clear")
+    if (turns == 0) {
+      message("You died (max turns)! Try again!")
+      is_alive <- FALSE
     }
-
-    if (in_rstudio) {
-      cat("\014")
-    }
-
-    .cat_room(room)
-    .cat_stats(turns, hp, gold, food)
-    cat(msg)
 
   }
 
