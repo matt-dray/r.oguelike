@@ -35,6 +35,8 @@ To begin:
 r.oguelike::start_game()
 ```
 
+The screen will clear and you’ll see this:
+
     # # # # # # # # # 
     # . . . . E . . # 
     # . . . . . . . # 
@@ -42,8 +44,8 @@ r.oguelike::start_game()
     # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    HP: 10 | G: 0 | A: 0
-    Start game
+    T: 25 | HP: 10 | G: 0 | A: 0
+    Press key to start
 
 If you’re using a terminal that supports [the {keypress}
 package](https://github.com/gaborcsardi/keypress), then you can move the
@@ -67,14 +69,16 @@ So, going left moves you one tile to the left:
     # . $ . . . a . # 
     # . . . . . . . # 
     # # # # # # # # # 
-    HP: 10 | G: 0 | A: 0
+    T: 24 | HP: 10 | G: 0 | A: 0
     Moved left
 
 Collect the gold (`$`). Stomp an enemy (`E`). Collect an apple (`a`) for
-your inventory, then eat it with a keypress input of `1`.
+your inventory, then eat it with a keypress input of `1`. You’ll die if
+you run out of `HP` or if you reach the maximum number of allowed turns
+(`T`).
 
 Future developments include an inventory system, randomised dungeons and
-turn-based battles.
+interactive turn-based battles.
 
 ## Code of Conduct
 

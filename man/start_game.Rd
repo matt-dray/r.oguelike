@@ -2,34 +2,36 @@
 % Please edit documentation in R/roguelike.R
 \name{start_game}
 \alias{start_game}
-\title{Start A 'r.oguelike' Game}
+\title{Play A 'r.oguelike' Game}
 \usage{
-start_game(max_turns = Inf)
+start_game(max_turns = 25)
 }
 \arguments{
-\item{max_turns}{Numeric. How many turns? Default \code{Inf}.}
+\item{max_turns}{Numeric. How many turns? Default is 25.}
 }
 \value{
 Nothing. Clears the console and prints to it with \code{cat}.
 }
 \description{
-Clears the console and starts a game of 'r.oguelike'.
+Clears the console and starts a game of 'r.oguelike'. The user inputs a
+keypress to move the character and interact with the game.
 }
 \details{
-If your terminal supports the 'keypress' package, then you can use
-a single keypresses as input (e.g. the up arrow key), otherwise you will
-have to type words at the prompt. Use
-\code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
+Use the WASD keys to move up, left, down and right. Use the '1' key to eat
+an apple from your inventory. If your terminal supports the 'keypress'
+package, then you can use a single keypress as input (e.g. the up arrow
+key), otherwise you will have to type at the prompt and then press 'Enter'.
+Use \code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
 supported.
 
-Symbols are as follows:
+Symbols used in the game are as follows:
 \itemize{
-\item{\code{.}} {tile}
+\item{\code{.}} {floor tile}
 \item{\code{#}} {wall}
-\item{\code{@}} {player}
+\item{\code{@}} {player (10 HP max, -1 HP attack damage)}
 \item{\code{$}} {gold (+1 to +3 G)}
-\item{\code{E}} {enemy (-1 HP)}
-\item{\code{a}} {food (+1 HP)}
+\item{\code{E}} {enemy (3 HP max, -1 HP attack damage)}
+\item{\code{a}} {apple (+1 HP)}
 }
 }
 \examples{
