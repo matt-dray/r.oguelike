@@ -1,5 +1,6 @@
 template:
   bootstrap: 5
+  theme: monochrome
   bslib:
     bg: "#333333"
     fg: "#eeeeee"
