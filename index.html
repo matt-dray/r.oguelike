@@ -29,7 +29,7 @@
     
     <a class="navbar-brand me-2" href="index.html">r.oguelike</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,6 +69,7 @@
 <p>To begin:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">r.oguelike</span><span class="fu">::</span><span class="fu"><a href="reference/start_game.html">start_game</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The screen will clear and you’ll see this:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># # # # # # # # # </span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co"># . . . . E . . # </span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="co"># . . . . . . . # </span></span>
@@ -76,8 +77,8 @@
 <span id="cb3-5"><a href="#cb3-5"></a><span class="co"># . $ . . . a . # </span></span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="co"># . . . . . . . # </span></span>
 <span id="cb3-7"><a href="#cb3-7"></a><span class="co"># # # # # # # # # </span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>HP<span class="op">:</span><span class="st"> </span><span class="dv">10</span> <span class="op">|</span><span class="st"> </span>G<span class="op">:</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>A<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>Start game</span></code></pre></div>
+<span id="cb3-8"><a href="#cb3-8"></a>T<span class="op">:</span><span class="st"> </span><span class="dv">25</span> <span class="op">|</span><span class="st"> </span>HP<span class="op">:</span><span class="st"> </span><span class="dv">10</span> <span class="op">|</span><span class="st"> </span>G<span class="op">:</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>A<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>Press key to start</span></code></pre></div>
 <p>If you’re using a terminal that supports <a href="https://github.com/gaborcsardi/keypress" class="external-link">the {keypress} package</a>, then you can move the player character (<code>@</code>) with your arrow keys (or <a href="https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys" class="external-link">WASD keys</a>) around the room tiles (<code>.</code>) of the randomly-generated room, staying within the walls (<code>#</code>).</p>
 <p>If playing in a {keypress}-unsupported terminal, like RStudio, then you’ll be prompted to type the direction (<a href="https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys" class="external-link">WASD keys</a>) then hit the enter key. Use <code><a href="https://rdrr.io/pkg/keypress/man/has_keypress_support.html" class="external-link">keypress::has_keypress_support()</a></code> to see if your terminal supports {keypress}.</p>
 <p>So, going left moves you one tile to the left:</p>
@@ -88,10 +89,10 @@
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co"># . $ . . . a . # </span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co"># . . . . . . . # </span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co"># # # # # # # # # </span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>HP<span class="op">:</span><span class="st"> </span><span class="dv">10</span> <span class="op">|</span><span class="st"> </span>G<span class="op">:</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>A<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>T<span class="op">:</span><span class="st"> </span><span class="dv">24</span> <span class="op">|</span><span class="st"> </span>HP<span class="op">:</span><span class="st"> </span><span class="dv">10</span> <span class="op">|</span><span class="st"> </span>G<span class="op">:</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>A<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
 <span id="cb4-9"><a href="#cb4-9"></a>Moved left</span></code></pre></div>
-<p>Collect the gold (<code>$</code>). Stomp an enemy (<code>E</code>). Collect an apple (<code>a</code>) for your inventory, then eat it with a keypress input of <code>1</code>.</p>
-<p>Future developments include an inventory system, randomised dungeons and turn-based battles.</p>
+<p>Collect the gold (<code>$</code>). Stomp an enemy (<code>E</code>). Collect an apple (<code>a</code>) for your inventory, then eat it with a keypress input of <code>1</code>. You’ll die if you run out of <code>HP</code> or if you reach the maximum number of allowed turns (<code>T</code>).</p>
+<p>Future developments include an inventory system, randomised dungeons and interactive turn-based battles.</p>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
