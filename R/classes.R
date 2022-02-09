@@ -18,15 +18,22 @@ Room <- R6::R6Class(
     y = NULL,
     #' @field matrix Matrix
     matrix = NULL,
+    #' @field player R6-class object.
+    player = NULL,
+    #' @field player_loc Numeric
+    player_loc = NULL,
 
     #' @description Initialize an R6-class room.
     #' @param x_range Numeric vector.
     #' @param y_range Numeric vector.
     #' @return An R6-class object.
     initialize = function(x_range = self$x_range, y_range = self$y_range) {
+      self$player <- r.oguelike:::Player$new()
       self$x <- sample(x_range, 1)
       self$y <- sample(y_range, 1)
       self$matrix <- self$build(self$x, self$y)
+      self$player_loc <- self$find_empty_tile()
+      self$matrix[self$player_loc] <- self$player$sprite
     },
 
     #' @description Create a room matrix.
@@ -41,12 +48,20 @@ Room <- R6::R6Class(
       self$matrix <- room_2d
     },
 
+    #' @description Find an empty tile.
+    #' @param room Matrix.
+    #' @return Numeric.
+    find_empty_tile = function(room = self$matrix) {
+      empty_tiles <- which(room == ".")
+      sample(empty_tiles, 1)
+    },
+
     #' @description Default print method for room.
     #' @param matrix Matrix.
     #' @return Printed output.
-    print = function(matrix = self$matrix) {
-      for (i in 1:nrow(matrix)) {
-        cat(matrix[i, ], "\n")
+    print = function(room = self$matrix) {
+      for (i in 1:nrow(room)) {
+        cat(room[i, ], "\n")
       }
     }
 
@@ -81,15 +96,7 @@ Player <- R6::R6Class(
       self$hp     <- hp
       self$atk    <- atk
       self$move   <- move
-    },
-
-    #' @description Default print method for player.
-    #' @param sprite Character.
-    #' @return Printed output.
-    print = function(sprite = self$sprite) {
-      print(sprite)
     }
-
 
   )
 )
@@ -118,13 +125,6 @@ Enemy <- R6::R6Class(
       self$hp     <- hp
       self$atk    <- atk
       self$move   <- move
-    },
-
-    #' @description Default print method for enemy.
-    #' @param sprite Character.
-    #' @return Printed output.
-    print = function(sprite = self$sprite) {
-      print(sprite)
     }
 
   )
