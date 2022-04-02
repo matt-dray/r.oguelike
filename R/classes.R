@@ -4,41 +4,57 @@ Room <- R6::R6Class(
   classname = "Room",
   public = list(
 
-    #' @field tile Character.
+    #' @field tile Character. Floor tiles.
     tile = ".",
-    #' @field wall Character.
+    #' @field wall Character. Wall tiles.
     wall = "#",
-    #' @field x_range Numeric vector.
+    #' @field x_range Numeric vector. Sample for room x limit.
     x_range = 6:10,
-    #' @field y_range Numeric vector.
+    #' @field y_range Numeric vector. Sample for room y limit.
     y_range = 6:10,
-    #' @field x Numeric.
+    #' @field x Numeric. Room 'width' sampled from x_range.
     x = NULL,
-    #' @field y Numeric.
+    #' @field y Numeric. Room 'height' sampled from x_range.
     y = NULL,
-    #' @field matrix Matrix
+    #' @field matrix Matrix. Room as 2D object given x and y.
     matrix = NULL,
-    #' @field player R6-class object.
+
+    #' @field player R6-class object. Player.
     player = NULL,
-    #' @field player_loc Numeric
+    #' @field player_loc Numeric. Location of character in room matrix.
     player_loc = NULL,
 
+    #' @field player R6-class object. Enemy
+    enemy = NULL,
+    #' @field player_loc Numeric. Location of enemy in room matrix.
+    enemy_loc = NULL,
+
     #' @description Initialize an R6-class room.
-    #' @param x_range Numeric vector.
-    #' @param y_range Numeric vector.
+    #' @param x_range Numeric vector. Sample for room x limit.
+    #' @param y_range Numeric vector. Sample for room y limit.
     #' @return An R6-class object.
     initialize = function(x_range = self$x_range, y_range = self$y_range) {
-      self$player <- r.oguelike:::Player$new()
+
+      # Room
       self$x <- sample(x_range, 1)
       self$y <- sample(y_range, 1)
       self$matrix <- self$build(self$x, self$y)
+
+      # Player
+      self$player <- r.oguelike:::Player$new()
       self$player_loc <- self$find_empty_tile()
       self$matrix[self$player_loc] <- self$player$sprite
+
+      # Enemy
+      self$enemy <- r.oguelike:::Enemy$new()
+      self$enemy_loc <- self$find_empty_tile()
+      self$matrix[self$enemy_loc] <- self$enemy$sprite
+
     },
 
     #' @description Create a room matrix.
-    #' @param x Numeric.
-    #' @param y Numeric.
+    #' @param x Numeric. Room 'width' sampled from x_range.
+    #' @param y Numeric. Room 'height' sampled from x_range.
     #' @return Matrix.
     build = function(x, y) {
       room_1d <- rep(self$tile, x * y)
@@ -49,7 +65,7 @@ Room <- R6::R6Class(
     },
 
     #' @description Find an empty tile.
-    #' @param room Matrix.
+    #' @param room Matrix. Room as 2D object given x and y.
     #' @return Numeric.
     find_empty_tile = function(room = self$matrix) {
       empty_tiles <- which(room == ".")
@@ -57,7 +73,7 @@ Room <- R6::R6Class(
     },
 
     #' @description Default print method for room.
-    #' @param matrix Matrix.
+    #' @param matrix Matrix. Room as 2D object given x and y.
     #' @return Printed output.
     print = function(room = self$matrix) {
       for (i in 1:nrow(room)) {
@@ -74,22 +90,22 @@ Player <- R6::R6Class(
   classname = "Player",
   public = list(
 
-    #' @field sprite Character.
+    #' @field sprite Character. Player-character representation.
     sprite = "@",
-    #' @field max_hp Numeric.
+    #' @field max_hp Numeric. Hit-point ceiling.
     max_hp = NULL,
-    #' @field hp Numeric.
+    #' @field hp Numeric. Hit points held.
     hp     = NULL,
-    #' @field atk Numeric.
+    #' @field atk Numeric. Attack strength (damage dealt).
     atk    = NULL,
-    #' @field move Numeric.
+    #' @field move Numeric. Tile distance per move.
     move   = NULL,
 
     #' @description Initialize an R6-class player.
-    #' @param max_hp Numeric.
-    #' @param hp Numeric.
-    #' @param atk Numeric.
-    #' @param move Numeric.
+    #' @param max_hp Numeric. Hit-point ceiling.
+    #' @param hp Numeric. Hit points held.
+    #' @param atk Numeric. Attack strength (damage dealt).
+    #' @param move Numeric. Tile distance moved per turn
     #' @return An R6-class object.
     initialize = function(max_hp = 10, hp = 10, atk = 1, move = 1) {
       self$max_hp <- max_hp
@@ -107,19 +123,19 @@ Enemy <- R6::R6Class(
   classname = "Enemy",
   public = list(
 
-    #' @field sprite Character.
+    #' @field sprite Character. Enemy-character representation.
     sprite = "e",
-    #' @field hp Numeric.
+    #' @field hp Numeric. Hit points held.
     hp = NULL,
-    #' @field atk Numeric.
+    #' @field atk Numeric. Attack strength (damage dealt).
     atk = NULL,
-    #' @field move Numeric.
+    #' @field move Numeric. Tile distance moved per turn.
     move = NULL,
 
     #' @description Initialize an R6-class enemy.
-    #' @param hp Numeric.
-    #' @param atk Numeric.
-    #' @param move Numeric.
+    #' @param hp Numeric. Hit points held.
+    #' @param atk Numeric. Attack strength (damage dealt).
+    #' @param move Numeric. Tile distance moved per turn.
     #' @return An R6-class object.
     initialize = function(hp = 4, atk = 1, move = 1) {
       self$hp     <- hp
@@ -141,9 +157,9 @@ Boss <- R6::R6Class(
     sprite = "E",
 
     #' @description Initialize an R6-class boss enemy
-    #' @param hp Numeric.
-    #' @param atk Numeric.
-    #' @param move Numeric.
+    #' @param hp Numeric. Hit points held.
+    #' @param atk Numeric. Attack strength (damage dealt).
+    #' @param move Numeric. Tile distance moved per turn.
     #' @return An R6-class object.
     initialize = function(hp = 8, atk = 2, move = 1) {
       self$hp     <- hp
