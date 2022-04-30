@@ -1,10 +1,13 @@
+# r.oguelike 0.0.0.9005
+
+* Added `generate_dungeon()` for randomised/procedural dungeon creation (#7)
+
 # r.oguelike 0.0.0.9004
 
-* Add enemy HP and attack.
-* Add autobattle state.
-* Use `is_alive` status to determine game state; use turn count and HP to end game.
-* Prevent apple consumption if max HP or if apple inventory is empty.
-
+* Added enemy HP and attack.
+* Added autobattle state.
+* Used `is_alive` status to determine game state; use turn count and HP to end game.
+* Prevented apple consumption if max HP or if apple inventory is empty.
 
 # r.oguelike 0.0.0.9003
 
