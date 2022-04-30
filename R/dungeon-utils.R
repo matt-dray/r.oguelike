@@ -1,16 +1,16 @@
 #' Create Dungeon And Place Start Points
 #' @param n_row Numeric. Number of row tiles in the dungeon, i.e. its height.
 #' @param n_col Numeric. Number of column tiles in the dungeon, i.e. its width.
-#' @param n_points Numeric. Number of start points to 'grow' rooms from.
+#' @param n_rooms Numeric. Number of start points to 'grow' rooms from.
 #' @param seed Numeric. Seed to reproduce a dungeon.
 #' @noRd
-.create_dungeon <- function(n_row, n_col, n_points, seed = NULL) {
+.create_dungeon <- function(n_row, n_col, n_rooms, seed = NULL) {
 
   if (!is.numeric(n_row) | n_row <= 0 | !is.numeric(n_col) | n_col <= 0) {
     stop("Argument n_points must be numeric (zero or greater).")
   }
 
-  if (!is.numeric(n_points) & n_points < 1) {
+  if (!is.numeric(n_rooms) & n_rooms < 1) {
     stop("Argument n_points must be a positive numeric value.")
   }
 
@@ -38,8 +38,7 @@
   edges <- unique(sort(c(edge_n, edge_s, edge_e, edge_w)))
 
   m_no_edges <- which(!seq(m) %in% edges)
-  # seed_tiles <- sort(sample(m_no_edges, n_points))
-  chunks_to_sample <- split(m_no_edges, sort(m_no_edges %% n_points))
+  chunks_to_sample <- split(m_no_edges, sort(m_no_edges %% n_rooms))
   seed_tiles <- unlist(lapply(chunks_to_sample, function(x) sample(x, 1)))
 
   m[seed_tiles] <- "."
@@ -94,15 +93,15 @@
 
 #' Connect Dungeon Room Start Points
 #' @param m Matrix. Dungeon matrix output from \code{\link{.create_dungeon}}.
-#' @param snake Logical. Should the start points be connected in matrix index
+#' @param is_snake Logical. Should the start points be connected in matrix index
 #'   order (\code{TRUE}), or randomly (\code{FALSE})?
 #' @noRd
-.connect_dungeon <- function(m, snake) {
+.connect_dungeon <- function(m, is_snake) {
 
   start_coords <- which(data.frame(m) == ".", arr.ind = TRUE)
   start_coords_df <- data.frame(start_coords)
 
-  if (!snake) {
+  if (!is_snake) {
     start_coords_df <- start_coords_df[sample(1:nrow(start_coords_df)), ]
   }
 

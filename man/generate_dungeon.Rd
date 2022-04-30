@@ -8,9 +8,9 @@ generate_dungeon(
   iterations = 5,
   n_row = 30,
   n_col = 50,
-  n_points = 4,
-  snake = FALSE,
-  corridor_first = TRUE,
+  n_rooms = 4,
+  is_snake = FALSE,
+  is_organic = TRUE,
   seed = NULL,
   colour = TRUE
 )
@@ -22,13 +22,16 @@ generate_dungeon(
 
 \item{n_col}{Numeric. Number of column tiles in the dungeon, i.e. its width.}
 
-\item{n_points}{Numeric. Number of start points to 'grow' rooms from.}
+\item{n_rooms}{Numeric. Number of start points to be placed randomly to
+'grow' rooms from.}
 
-\item{snake}{Logical. Should the start points be connected in matrix index
-order (\code{TRUE}), or randomly (\code{FALSE})?}
+\item{is_snake}{Logical. Should the start points be connected in matrix index
+order (\code{TRUE}), or randomly (\code{FALSE})? The former will create a
+single continuous, winding cavern.}
 
-\item{corridor_first}{Logical. Join start points with corridors before
-growing rooms (\code{TRUE}), or the other way round (\code{FALSE})?}
+\item{is_organic}{Logical. Join start points with corridors before
+growing rooms (\code{TRUE}), or the other way round (\code{FALSE})? The
+former looks more 'organic', the latter more square, or 'artificial'.}
 
 \item{seed}{Numeric. Seed to reproduce a dungeon.}
 
@@ -46,9 +49,8 @@ and connecting corridors from which rooms can be grown.
 \details{
 You will have to experiment to find the 'best' argument values for
 your needs. Typically, a larger dungeon should have more
-\code{n_points} and can be grown through more \code{iterations}, and vice
-versa. Using \code{snake} will generally create a single winding cavern
-with a more obvious 'start' and 'end'.
+\code{n_rooms} and can be grown through more \code{iterations}, and vice
+versa.
 }
 \examples{
 \dontrun{generate_dungeon(10, 20, 30, 3)}
