@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # {r.oguelike}
 
 <!-- badges: start -->
@@ -11,21 +9,24 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 [![R-CMD-check](https://github.com/matt-dray/r.oguelike/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/r.oguelike/actions)
 [![Launch Rstudio
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio)
-[![](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
+[![Roguelike](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
 [![Blog
-post](https://img.shields.io/badge/rostrum.blog-post-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/)
+post](https://img.shields.io/badge/rostrum.blog-post_1-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/)
+[![Blog
+post](https://img.shields.io/badge/rostrum.blog-post_2-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/05/01/dungeon/)
 <!-- badges: end -->
 
 A (work-in-progress) text-based [roguelike
 game](https://en.wikipedia.org/wiki/Roguelike) for R. A learning process
 to build a gameplay ‘engine’ from the ground up. Read more [in the
-accompanying
+inaugural
 blogpost](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/).
 
-You can install the in-development {r.oguelike} package from GitHub:
+You can install the in-development {r.oguelike} package from GitHub via {remotes}:
 
 ``` r
-remotes::install_github("matt-dray/r.oguelike")
+if (!require(remotes)) install.packages("remotes")
+install_github("matt-dray/r.oguelike")
 ```
 
 Or [you can launch an instance of RStudio in the
@@ -39,17 +40,19 @@ To begin:
 r.oguelike::start_game()
 ```
 
-The screen will clear and you’ll see this:
+The screen will clear and you’ll see something similar to this:
 
-    # # # # # # # # # 
-    # . . . . E . . # 
-    # . . . . . . . # 
-    # . . . @ . . . # 
-    # . $ . . . a . # 
-    # . . . . . . . # 
-    # # # # # # # # # 
-    T: 25 | HP: 10 | G: 0 | A: 0
-    Press key to start
+```
+# # # # # # # # # 
+# . . . . E . . # 
+# . . . . . . . # 
+# . . . @ . . . # 
+# . $ . . . a . # 
+# . . . . . . . # 
+# # # # # # # # # 
+T: 25 | HP: 10 | G: 0 | A: 0
+Press key to start
+```
 
 If you’re using a terminal that supports [the {keypress}
 package](https://github.com/gaborcsardi/keypress), then you can move the
@@ -66,23 +69,27 @@ terminal supports {keypress}.
 
 So, going left moves you one tile to the left:
 
-    # # # # # # # # # 
-    # . . . . E . . # 
-    # . . . . . . . # 
-    # . . @ . . . . # 
-    # . $ . . . a . # 
-    # . . . . . . . # 
-    # # # # # # # # # 
-    T: 24 | HP: 10 | G: 0 | A: 0
-    Moved left
+```
+# # # # # # # # # 
+# . . . . E . . # 
+# . . . . . . . # 
+# . . @ . . . . # 
+# . $ . . . a . # 
+# . . . . . . . # 
+# # # # # # # # # 
+T: 24 | HP: 10 | G: 0 | A: 0
+Moved left
+```
 
 Collect the gold (`$`). Stomp an enemy (`E`). Collect an apple (`a`) for
 your inventory, then eat it with a keypress input of `1`. You’ll die if
 you run out of `HP` or if you reach the maximum number of allowed turns
 (`T`).
 
-Future developments include an inventory system, randomised dungeons and
-interactive turn-based battles.
+Future developments include things like interactive turn-based battles and procedural dungeons; see [the issues](https://github.com/matt-dray/r.oguelike/issues) for more ideas or to provide your own.  
+
+As of version 0.0.0.9005, there is an experimental function for dungeons, `generate_dungeon()`, which currently operates independently from
+`start_game()`. You can read more in [the associated blog post](https://www.rostrum.blog/2022/05/01/dungeon/).
 
 ## Code of Conduct
 
