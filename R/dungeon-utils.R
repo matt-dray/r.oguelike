@@ -89,11 +89,8 @@
   )
 
   tiles_to_sample <- adjacent_tiles[!adjacent_tiles %in% map_edges]
-
-  new_room_tiles <- sample(
-    tiles_to_sample,
-    size = sample(length(tiles_to_sample))
-  )
+  n_to_sample <- sample(1:length(tiles_to_sample), 1)
+  new_room_tiles <- sample(tiles_to_sample, n_to_sample)
 
   m[new_room_tiles] <- "."
 
