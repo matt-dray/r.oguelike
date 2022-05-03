@@ -35,13 +35,18 @@
   m[unique(c(edge_n, edge_s))] <- "-"
   m[unique(c(edge_e, edge_w))] <- "|"
 
-  edges <- unique(sort(c(edge_n, edge_s, edge_e, edge_w)))
+  edge_tiles <- sort(unique(c(edge_n, edge_s, edge_e, edge_w)))
 
-  m_no_edges <- which(!seq(m) %in% edges)
-  chunks_to_sample <- split(m_no_edges, sort(m_no_edges %% n_rooms))
-  seed_tiles <- unlist(lapply(chunks_to_sample, function(x) sample(x, 1)))
+  m_no_edges <- which(!seq(m) %in% edge_tiles)
 
-  m[seed_tiles] <- "."
+  chunks_to_sample <- split(
+    m_no_edges,
+    cut(seq_along(m_no_edges), n_rooms, labels = FALSE)
+  )
+
+  room_start_tiles <- unlist(lapply(chunks_to_sample, function(x) sample(x, 1)))
+
+  m[room_start_tiles] <- "."
 
   m
 
@@ -56,42 +61,47 @@
     stop("Argument m must be a matrix.")
   }
 
-  index <- which(m == ".")
-  index_l <- length(index)
+  room_tiles <- which(m == ".")
 
-  n_index <- index - 1
-  s_index <- index + 1
-  e_index <- index - nrow(m)
-  w_index <- index + nrow(m)
-
-  indices <- sort(unique(c(n_index, s_index, e_index, w_index)))
-  indices <- indices[indices > 0 & indices <= length(m)]
-
-  edges <- unique(
-    sort(
+  adjacent_tiles <- sort(
+    unique(
       c(
-        seq(1, length(m), nrow(m)),
-        seq(nrow(m), length(m), nrow(m)),
-        seq(nrow(m)),
-        seq(length(m) - nrow(m), length(m), 1)
+        room_tiles - 1,        # tiles to north of room tiles
+        room_tiles + 1,        # south
+        room_tiles - nrow(m),  # east
+        room_tiles + nrow(m)   # west
       )
     )
   )
 
-  indices_no_edges <- indices[!indices %in% edges]
+  adjacent_tiles <-
+    adjacent_tiles[adjacent_tiles > 0 & adjacent_tiles <= length(m)]
 
-  indices_sampled <- sample(
-    indices_no_edges,
-    size = sample(length(indices_no_edges))
+  map_edges <- sort(
+    unique(
+      c(
+        seq(1, length(m), nrow(m)),           # tiles on the north edge
+        seq(nrow(m), length(m), nrow(m)),     # south
+        seq(length(m) - nrow(m), length(m)),  # east
+        seq(nrow(m))                          # west
+      )
+    )
   )
 
-  m[indices_sampled] <- "."
+  tiles_to_sample <- adjacent_tiles[!adjacent_tiles %in% map_edges]
+
+  new_room_tiles <- sample(
+    tiles_to_sample,
+    size = sample(length(tiles_to_sample))
+  )
+
+  m[new_room_tiles] <- "."
 
   m
 
 }
 
-#' Connect Dungeon Room Start Points
+#' Connect Room Start Points
 #' @param m Matrix. Dungeon matrix output from \code{\link{.create_dungeon}}.
 #' @param is_snake Logical. Should the start points be connected in matrix index
 #'   order (\code{TRUE}), or randomly (\code{FALSE})?
@@ -135,7 +145,7 @@
 
 }
 
-#' Print A Dungeon Matrix
+#' Print A Dungeon Matrix To The Console
 #' @param m Matrix. Dungeon matrix output from \code{\link{.create_dungeon}}.
 #' @param colour Logical. Should the characters be coloured using \pkg{crayon}
 #'   (\code{TRUE})?
