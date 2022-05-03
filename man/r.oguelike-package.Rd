@@ -8,6 +8,15 @@
 \description{
 Play a simple ASCII game in the console inspired heavily by roguelike games, particularly Rogue (1980) itself. Work in progress.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/matt-dray/r.oguelike}
+  \item \url{https://matt-dray.github.io/r.oguelike/}
+  \item Report bugs at \url{https://github.com/matt-dray/r.oguelike/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Matt Dray \email{mwdray@gmail.com}
 
