@@ -49,6 +49,61 @@
 
 }
 
+#' #' Generate A Dungeon Map
+#' @param iterations Numeric. How many times to 'grow' iteratively the dungeon
+#'     rooms, where tiles adjacent to current floor tiles (\code{.}) have a
+#'     random chance of becoming floor tiles themselves with each iteration.
+#' @param n_row Numeric. Number of row tiles in the dungeon, i.e. its height.
+#' @param n_col Numeric. Number of column tiles in the dungeon, i.e. its width.
+#' @param n_rooms Numeric. Number of rooms to place randomly on the map as
+#'     starting points for iterative growth.
+#' @param is_snake Logical. Should the room start points be connected randomly
+#'     (\code{FALSE}, the default) or from left to right across the room matrix
+#'     (\code{TRUE})? See details.
+#' @param is_organic Logical. Join the room start points with corridors before
+#'     iterative growth steps (\code{TRUE}, the default), or after
+#'     (\code{FALSE})? See details.
+#' @param seed Numeric. Seed to reproduce a dungeon.
+#' @param colour Logical. Should the characters be coloured using
+#'     \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?
+#' @noRd
+.make_dungeon <- function(
+  iterations = 5,
+  n_row = 20,
+  n_col = 40,
+  n_rooms = 4,
+  is_snake = FALSE,
+  is_organic = TRUE,
+  seed = NULL,
+  colour = TRUE
+) {
+
+  m <- .create_dungeon(n_row, n_col, n_rooms, seed)
+
+  if (is_organic) {
+    m <- .connect_dungeon(m, is_snake)
+  }
+
+  i <- 0
+
+  while (i < iterations) {
+    m <- .grow_dungeon(m)
+    i <- i + 1
+  }
+
+  if (!is_organic) {
+    m <- .connect_dungeon(m, is_snake)
+  }
+
+  m <- .add_object(m, "$")
+  m <- .add_object(m, "E")
+  m <- .add_object(m, "a")
+  m <- .add_object(m, "@")
+
+  m
+
+}
+
 #' Concatenate And Print A Room Matrix
 #' @param room Matrix. 2D room layout.
 #' @noRd
@@ -58,7 +113,15 @@
     stop("Argument 'room' must be a matrix.")
   }
 
-  for (i in 1:nrow(room)) {
+  room[which(room == ".")] <- crayon::black(".")
+  room[which(room == "#")] <- crayon::red("#")
+
+  room[which(room == "$")] <- crayon::yellow("$")
+  room[which(room == "E")] <- crayon::bgMagenta("E")
+  room[which(room == "a")] <- crayon::green("a")
+  room[which(room == "@")] <- crayon::bgBlue ("@")
+
+  for (i in seq(nrow(room))) {
     cat(room[i, ], "\n")
   }
 

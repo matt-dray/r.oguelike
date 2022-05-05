@@ -37,7 +37,7 @@ start_game <- function(max_turns = 25) {
   keypress_support <- keypress::has_keypress_support()
   in_rstudio <- Sys.getenv("RSTUDIO") == "1"
 
-  room <- .make_room()
+  room <- .make_dungeon()  # .make_room()
 
   turns  <- max_turns
   hp     <- 10
