@@ -64,7 +64,7 @@ start_game <- function(max_turns = 25) {
 
     .cat_room(room)
     .cat_stats(turns, hp, gold, food)
-    message(msg)
+    message(crayon::white(msg))
 
     gold_loc  <- which(room == "$")
     enemy_loc <- which(room == "E")
@@ -162,7 +162,7 @@ start_game <- function(max_turns = 25) {
     turns <- turns - 1
 
     if (turns == 0) {
-      message("You died (max turns)! Try again!")
+      message(crayon::white("You died (max turns)! Try again!"))
       is_alive <- FALSE
     }
 

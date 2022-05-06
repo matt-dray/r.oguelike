@@ -69,9 +69,9 @@
 #' @noRd
 .make_dungeon <- function(
   iterations = 5,
-  n_row = 20,
+  n_row = 30,
   n_col = 40,
-  n_rooms = 4,
+  n_rooms = 5,
   is_snake = FALSE,
   is_organic = TRUE,
   seed = NULL,
@@ -116,10 +116,10 @@
   room[which(room == ".")] <- crayon::black(".")
   room[which(room == "#")] <- crayon::red("#")
 
-  room[which(room == "$")] <- crayon::yellow("$")
+  room[which(room == "$")] <- crayon::bgYellow("$")
   room[which(room == "E")] <- crayon::bgMagenta("E")
-  room[which(room == "a")] <- crayon::green("a")
-  room[which(room == "@")] <- crayon::bgBlue ("@")
+  room[which(room == "a")] <- crayon::bgGreen("a")
+  room[which(room == "@")] <- crayon::bgCyan("@")
 
   for (i in seq(nrow(room))) {
     cat(room[i, ], "\n")
@@ -136,7 +136,7 @@
 .cat_stats <- function(turns, hp, gold, food) {
 
   stats <- paste("T:", turns, "| HP:", hp, "| G:", gold, "| A:", food)
-  message(stats)
+  message(crayon::white(stats))
 
 }
 
