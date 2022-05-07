@@ -7,93 +7,93 @@
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![R-CMD-check](https://github.com/matt-dray/r.oguelike/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/r.oguelike/actions)
+[![Codecov test coverage](https://codecov.io/gh/matt-dray/r.oguelike/branch/main/graph/badge.svg)](https://app.codecov.io/gh/matt-dray/r.oguelike?branch=main)
 [![Launch Rstudio
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio)
-[![Roguelike](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
-[![Blog
-post](https://img.shields.io/badge/rostrum.blog-post_1-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/)
-[![Blog
-post](https://img.shields.io/badge/rostrum.blog-post_2-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/05/01/dungeon/)
+[![Blog post](https://img.shields.io/badge/rostrum.blog-post_1-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/)
+[![Blog post](https://img.shields.io/badge/rostrum.blog-post_2-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/05/01/dungeon/)
+
 <!-- badges: end -->
 
-A (work-in-progress) text-based [roguelike
-game](https://en.wikipedia.org/wiki/Roguelike) for R. A learning process
-to build a gameplay ‘engine’ from the ground up. Read more [in the
-inaugural
-blogpost](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/).
+A work-in-progress tile-based [roguelike game](https://en.wikipedia.org/wiki/Roguelike) for R. 
 
-You can install the in-development {r.oguelike} package from GitHub via {remotes}:
+Visit [the documentation website](https://matt-dray.github.io/r.oguelike/reference/start_game.html) or read more [in the inaugural blogpost](https://www.rostrum.blog/2022/04/25/r.oguelike-dev/). See [the issues](https://github.com/matt-dray/r.oguelike/issues) for future plans or to suggest improvements.
+
+You can install {r.oguelike} from GitHub via {remotes} (packages [{crayon}](https://github.com/r-lib/crayon) and [{keypress}](https://github.com/gaborcsardi/keypress) are also installed):
 
 ``` r
 if (!require(remotes)) install.packages("remotes")
 install_github("matt-dray/r.oguelike")
 ```
 
-Or [you can launch an instance of RStudio in the
-browser](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio),
-thanks to [Binder](https://mybinder.org/), with {r.oguelike}
-preinstalled.
+You could also [launch an instance of RStudio in the browser](https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio), thanks to [Binder](https://mybinder.org/), with {r.oguelike} preinstalled.
 
-To begin:
+Use `start_game()` to begin. You can adjust the default parameters; see `?start_game` or [visit the documentation website](https://matt-dray.github.io/r.oguelike/reference/start_game.html) for details.
 
 ``` r
-r.oguelike::start_game()
+r.oguelike::start_game(
+  iterations = 3,
+  n_row = 15,
+  n_col = 20,
+  n_rooms = 4,
+  max_turns = 25
+)
 ```
 
-The screen will clear and you’ll see something similar to this:
+The console will clear and you’ll see a map, with an inventory bar, status message and prompt for input. Output will appear in colour with the argument `colour = TRUE` (the default).
 
 ```
-# # # # # # # # # 
-# . . . . E . . # 
-# . . . . . . . # 
-# . . . @ . . . # 
-# . $ . . . a . # 
-# . . . . . . . # 
-# # # # # # # # # 
-T: 25 | HP: 10 | G: 0 | A: 0
-Press key to start
+# # # # # # # # # # # # # # # # # # # # 
+# # # # # # # . . . . . . . . # # # # # 
+# # # # # # # # . . . . $ . . # # # # # 
+# # # # # # # # . # # . . . . # # # # # 
+# . # # # # # # # # # . . . # # # # # # 
+# . . # # # # # # # # . . . # # # # # # 
+# . . . # # # # # # # . . . . . # . # # 
+# . . # # # # # # # . . . . . . . . # # 
+# . . # # # # # # # # . . . . . . # # # 
+# . @ . . . # # . # # # # . . . . . # # 
+# . . . . . . . . . . . . . . . . # # # 
+# . . . . . . . . . E . . . . . . # # # 
+# . . a . . . . . . . . . . . . # # # # 
+# # . . . . # # . # # # # . # # # # # # 
+# # # # # # # # # # # # # # # # # # # # 
+T: 25 | HP: 10 | $: 0 | a: 0
+Press W, A, S or D then Enter to move, 1 to eat apple, 0 to exit
+Input:
 ```
 
-If you’re using a terminal that supports [the {keypress}
-package](https://github.com/gaborcsardi/keypress), then you can move the
-player character (`@`) with your arrow keys (or [WASD
-keys](https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys)) around the
-room tiles (`.`) of the randomly-generated room, staying within the
-walls (`#`).
+The dungeon map (`#` for walls and `.` for floor tiles) and placement of objects (`@` is the player, `E` is an enemy, `$` is gold and `a` is an apple) are randomised. [See the accompanying blogpost](https://www.rostrum.blog/2022/05/01/dungeon/) for more about how these dungeons are generated.
 
-If playing in a {keypress}-unsupported terminal, like RStudio, then
-you’ll be prompted to type the direction ([WASD
-keys](https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys)) then hit the
-enter key. Use `keypress::has_keypress_support()` to see if your
-terminal supports {keypress}.
+You can move the player character (`@`) with your arrow keys instead of the <kbd>W</kbd>, <kbd>A</kbd>, <kbd>S</kbd> or <kbd>D</kbd> keys if you’re using a terminal that supports [the {keypress} package](https://github.com/gaborcsardi/keypress) (RStudio doesn't).
 
-So, going left moves you one tile to the left:
+After pressing <kbd>s</kbd> then <kbd>Enter</kbd> (or the down arrow key, if supported), the player character moves one space down and the status message updates.
 
 ```
-# # # # # # # # # 
-# . . . . E . . # 
-# . . . . . . . # 
-# . . @ . . . . # 
-# . $ . . . a . # 
-# . . . . . . . # 
-# # # # # # # # # 
-T: 24 | HP: 10 | G: 0 | A: 0
-Moved left
+# # # # # # # # # # # # # # # # # # # # 
+# # # # # # # . . . . . . . . # # # # # 
+# # # # # # # # . . . . $ . . # # # # # 
+# # # # # # # # . # # . . . . # # # # # 
+# . # # # # # # # # # . . . # # # # # # 
+# . . # # # # # # # # . . . # # # # # # 
+# . . . # # # # # # # . . . . . # . # # 
+# . . # # # # # # # . . . . . . . . # # 
+# . . # # # # # # # # . . . . . . # # # 
+# . . . . . # # . # # # # . . . . . # # 
+# . @ . . . . . . . . . . . . . . # # # 
+# . . . . . . . . . E . . . . . . # # # 
+# . . a . . . . . . . . . . . . # # # # 
+# # . . . . # # . # # # # . # # # # # # 
+# # # # # # # # # # # # # # # # # # # # 
+T: 24 | HP: 10 | $: 0 | a: 0
+Moved down
+Input:
 ```
 
-Collect the gold (`$`). Stomp an enemy (`E`). Collect an apple (`a`) for
-your inventory, then eat it with a keypress input of `1`. You’ll die if
-you run out of `HP` or if you reach the maximum number of allowed turns
-(`T`).
-
-Future developments include things like interactive turn-based battles and procedural dungeons; see [the issues](https://github.com/matt-dray/r.oguelike/issues) for more ideas or to provide your own.  
-
-As of version 0.0.0.9005, there is an experimental function for dungeons, `generate_dungeon()`, which currently operates independently from
-`start_game()`. You can read more in [the associated blog post](https://www.rostrum.blog/2022/05/01/dungeon/).
+Collect the gold (`$`). Auto-battle an enemy (`E`). Collect an apple (`a`) for your inventory, then eat it with a keypress input of `1`. You’ll die if you run out of `HP` or if you reach the maximum number of turns allowed (`T`). You can quit the game with `0`.
 
 ## Code of Conduct
 
-Please note that the {r.oguelike} project is released with a
-[Contributor Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+Please note that the {r.oguelike} project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+[![Roguelike](https://img.shields.io/badge/@-...$..a....E...-black?style=flat&labelColor=white)](https://en.wikipedia.org/wiki/Roguelike)
