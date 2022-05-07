@@ -2,26 +2,60 @@
 % Please edit documentation in R/gameplay.R
 \name{start_game}
 \alias{start_game}
-\title{Play A 'r.oguelike' Game}
+\title{Play A Roguelike Game}
 \usage{
-start_game(max_turns = 25)
+start_game(
+  max_turns = Inf,
+  iterations = 5,
+  n_row = 30,
+  n_col = 40,
+  n_rooms = 5,
+  is_snake = FALSE,
+  is_organic = TRUE,
+  is_colour = TRUE
+)
 }
 \arguments{
-\item{max_turns}{Numeric. How many turns? Default is 25.}
+\item{max_turns}{Numeric. How many turns? Default is \code{Inf}(inite).}
+
+\item{iterations}{Numeric. How many times to 'grow' iteratively the dungeon
+rooms, where tiles adjacent to current floor tiles (\code{.}) have a
+random chance of becoming floor tiles themselves with each iteration.}
+
+\item{n_row}{Numeric. Number of row tiles in the dungeon, i.e. its height.}
+
+\item{n_col}{Numeric. Number of column tiles in the dungeon, i.e. its width.}
+
+\item{n_rooms}{Numeric. Number of rooms to place randomly on the map as
+starting points for iterative growth.}
+
+\item{is_snake}{Logical. Should the room start points be connected randomly
+(\code{FALSE}, the default) or from left to right across the room matrix
+(\code{TRUE})? See details.}
+
+\item{is_organic}{Logical. Join the room start points with corridors before
+iterative growth steps (\code{TRUE}, the default), or after
+(\code{FALSE})? See details.}
+
+\item{is_colour}{Logical. Should the characters in the output be coloured
+using \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?}
 }
 \value{
-Nothing. Clears the console and prints to it with \code{cat}.
+Nothing. Clears the console and prints to it with
+\code{\link[base]{cat}}.
 }
 \description{
-Clears the console and starts a game of 'r.oguelike'. The user inputs a
-keypress to move the character and interact with the game.
+Clears the console and starts a game of 'r.oguelike' by printing a map with
+an inventory and status message. The user inputs a keypress to move the
+character and explore the map, fighting enemies and collecting objects.
 }
 \details{
 Use the WASD keys to move up, left, down and right. Use the '1' key to eat
-an apple from your inventory. If your terminal supports the 'keypress'
-package, then you can use a single keypress as input (e.g. the up arrow
-key), otherwise you will have to type at the prompt and then press 'Enter'.
-Use \code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
+an apple from your inventory. Use the '0' to quit the game. If your
+terminal supports the 'keypress' package, then you can use a single
+keypress as input (e.g. the up arrow key), otherwise you will have to type
+at the prompt and then press 'Enter'.Use
+\code{\link[keypress]{has_keypress_support}} to see if 'keypress' is
 supported.
 
 Symbols used in the game are as follows:

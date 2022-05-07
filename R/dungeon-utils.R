@@ -32,10 +32,9 @@
   edge_w <- seq(n_row)
   edge_e <- seq(length(m) - (n_row - 1), length(m), 1)
 
-  m[unique(c(edge_n, edge_s))] <- "-"
-  m[unique(c(edge_e, edge_w))] <- "|"
-
   edge_tiles <- sort(unique(c(edge_n, edge_s, edge_e, edge_w)))
+
+  m[edge_tiles] <- "#"
 
   m_no_edges <- which(!seq(m) %in% edge_tiles)
 

@@ -1,6 +1,13 @@
+# r.oguelike 0.0.0.9006
+
+* Integrated sub-functions of `generate_dungeon()` into `start_game()` (#7), replacing simple rectangular rooms.
+* Added 'quit' keypress (`0`) to exit game.
+* Updated function documentation/comments and some variable names for clarity.
+* Updated README given dungeon map changes.
+
 # r.oguelike 0.0.0.9005
 
-* Added `generate_dungeon()` for randomised/procedural dungeon creation (#7)
+* Added `generate_dungeon()` for randomised/procedural dungeon creation (#7).
 
 # r.oguelike 0.0.0.9004
 

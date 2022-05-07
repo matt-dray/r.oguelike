@@ -1,26 +1,77 @@
 
 #' Add Objects To A Room
-#' @param room Matrix. 2D room layout.
+#' @param game_map Matrix. 2D game_map layout.
 #' @param object Character. Object to place.
 #' @noRd
-.add_object <- function(room, object = c("@", "$", "E", "a")) {
+.add_object <- function(game_map, object = c("@", "$", "E", "a")) {
 
-  if (!inherits(room, "matrix")) {
-    stop("Argument 'room' must be a matrix.")
+  if (!inherits(game_map, "matrix")) {
+    stop("Argument 'game_map' must be a matrix.")
   }
 
   object <- match.arg(object)
 
-  empty_tiles <- which(room == ".")
-  sample_tile <- sample(empty_tiles, 1)
-  room[sample_tile] <- object
+  empty_tiles <- which(game_map == ".")
+  sample_tile <- sample(empty_tiles, 1)  # random placement of objects
+  game_map[sample_tile] <- object
 
-  return(room)
+  return(game_map)
 
 }
 
-#' Generate A Room From Sampled Dimensions
-#' @param what Numeric vector. Values that room height and width can take.
+#' #' Generate A Dungeon Map
+#' @param iterations Numeric. How many times to 'grow' iteratively the dungeon
+#'     rooms, where tiles adjacent to current floor tiles (\code{.}) have a
+#'     random chance of becoming floor tiles themselves with each iteration.
+#' @param n_row Numeric. Number of row tiles in the dungeon, i.e. its height.
+#' @param n_col Numeric. Number of column tiles in the dungeon, i.e. its width.
+#' @param n_rooms Numeric. Number of rooms to place randomly on the map as
+#'     starting points for iterative growth.
+#' @param is_snake Logical. Should the room start points be connected randomly
+#'     (\code{FALSE}, the default) or from left to right across the room matrix
+#'     (\code{TRUE})? See details.
+#' @param is_organic Logical. Join the room start points with corridors before
+#'     iterative growth steps (\code{TRUE}, the default), or after
+#'     (\code{FALSE})? See details.
+#' @noRd
+.make_dungeon <- function(
+  iterations = 5,
+  n_row = 30,
+  n_col = 40,
+  n_rooms = 5,
+  is_snake = FALSE,
+  is_organic = TRUE
+) {
+
+  m <- .create_dungeon(n_row, n_col, n_rooms)
+
+  if (is_organic) {
+    m <- .connect_dungeon(m, is_snake)
+  }
+
+  i <- 0
+
+  while (i < iterations) {
+    m <- .grow_dungeon(m)
+    i <- i + 1
+  }
+
+  if (!is_organic) {
+    m <- .connect_dungeon(m, is_snake)
+  }
+
+  m <- .add_object(m, "$")
+  m <- .add_object(m, "E")
+  m <- .add_object(m, "a")
+  m <- .add_object(m, "@")
+
+  m
+
+}
+
+#' Generate A Simple Room From Sampled Dimensions
+#' @param what Numeric vector. Values that room height and width can be sampled
+#'     from.
 #' @noRd
 .make_room <- function(room_size_limit = 6:10) {
 
@@ -34,7 +85,6 @@
   room_size <- room_x * room_y
 
   room_1d <- rep(".", room_size)
-
   room_2d <- matrix(room_1d, nrow = room_x, ncol = room_y)
 
   room_2d[c(1, nrow(room_2d)), ] <- "#"
@@ -49,17 +99,30 @@
 
 }
 
-#' Concatenate And Print A Room Matrix
-#' @param room Matrix. 2D room layout.
+#' Concatenate And Print A Matrix Of The Game Map
+#' @param room Matrix. 2D map layout.
+#' @param is_colour Logical. Should the characters in the output be coloured
+#'     using \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?
 #' @noRd
-.cat_room <- function(room) {
+.cat_map <- function(game_map, is_colour = TRUE) {
 
-  if (!inherits(room, "matrix")) {
-    stop("Argument 'room' must be a matrix.")
+  if (!inherits(game_map, "matrix")) {
+    stop("Argument 'game_map' must be a matrix.")
   }
 
-  for (i in 1:nrow(room)) {
-    cat(room[i, ], "\n")
+  if (is_colour) {
+
+    game_map[which(game_map == ".")] <- crayon::black(".")
+    game_map[which(game_map == "#")] <- crayon::red("#")
+    game_map[which(game_map == "$")] <- crayon::bgYellow("$")
+    game_map[which(game_map == "E")] <- crayon::bgMagenta("E")
+    game_map[which(game_map == "a")] <- crayon::bgGreen("a")
+    game_map[which(game_map == "@")] <- crayon::bgCyan("@")
+
+  }
+
+  for (i in seq(nrow(game_map))) {
+    cat(game_map[i, ], "\n")
   }
 
 }
@@ -72,7 +135,13 @@
 #' @noRd
 .cat_stats <- function(turns, hp, gold, food) {
 
-  stats <- paste("T:", turns, "| HP:", hp, "| G:", gold, "| A:", food)
+  if (
+    !is.numeric(turns) | !is.numeric(hp) | !is.numeric(gold) | !is.numeric(food)
+  ) {
+    stop("Arguments 'turns', 'hp', 'gold' and 'food' must be numeric.")
+  }
+
+  stats <- paste("T:", turns, "| HP:", hp, "| $:", gold, "| a:", food)
   message(stats)
 
 }
@@ -81,21 +150,22 @@
 #' @noRd
 .accept_keypress <- function() {
 
-  keypress_support <- keypress::has_keypress_support()
+  supports_keypress <- keypress::has_keypress_support()
 
+  # Accepted keypresses
   wasd_kps <- c("w", "a", "s", "d")
   udlr_kps <- c("up", "down", "left", "right")
   inv_kps  <- "1"
+  exit_kps <- "0"
+  is_legal_key <- FALSE
 
-  legal_key <- FALSE
+  while (!is_legal_key) {
 
-  while (!legal_key) {
-
-    if (keypress_support) {
+    if (supports_keypress) {
 
       kp <- keypress::keypress()
 
-      if (kp %in% wasd_kps) {
+      if (kp %in% wasd_kps) {  # allow wasd even if {keypress} is viable
         kp <- switch(
           kp,
           "w" = "up",
@@ -105,13 +175,13 @@
         )
       }
 
-      if (kp %in% c(udlr_kps, inv_kps)) {
-        legal_key <- TRUE
+      if (kp %in% c(udlr_kps, inv_kps, exit_kps)) {
+        is_legal_key <- TRUE
       }
 
     }
 
-    if (!keypress_support) {
+    if (!supports_keypress) {
 
       kp <- readline("Input: ")
 
@@ -125,8 +195,8 @@
         )
       }
 
-      if (kp %in% c(udlr_kps, inv_kps)) {
-        legal_key <- TRUE
+      if (kp %in% c(udlr_kps, inv_kps, exit_kps)) {
+        is_legal_key <- TRUE
       }
 
     }
@@ -140,16 +210,21 @@
 #' Move Player Character And Increment Counters
 #' @param room Matrix. 2D room layout.
 #' @param kp Character. Outcome of keypress input (i.e. 'up', 'down', 'left',
-#'   'right').
+#'   'right' to move, '1' to eat an apple, '0' to exit).
 #' @noRd
-.move_player <- function(room, kp = c("up", "down", "left", "right")) {
+.move_player <- function(
+    room,
+    kp = c("up", "down", "left", "right", "1", "0")
+) {
 
   if (!inherits(room, "matrix")) {
     stop("Argument 'room' must be a matrix.")
   }
 
+  kp <- match.arg(kp)
+
   player_loc <- which(room == "@")
-  room[player_loc] <- "."
+  room[player_loc] <- "."  # replace old location with floor tile
 
   room_y_max <- nrow(room)
 
@@ -177,7 +252,7 @@
 
   }
 
-  room[player_loc] <- "@"
+  room[player_loc] <- "@"  # place at new location
 
   return(room)
 

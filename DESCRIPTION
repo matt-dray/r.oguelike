@@ -1,10 +1,11 @@
 Package: r.oguelike
 Title: Play a Roguelike Game In The Console
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R:
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
-Description: Play a simple ASCII game in the console inspired heavily by
-    roguelike games, particularly Rogue (1980) itself. Work in progress.
+Description: Play a simple ASCII-only tile-based game in the console inspired 
+    heavily by roguelike games, particularly Rogue (1980) itself. Work in 
+    progress.
 License: MIT + file LICENSE
 URL: https://github.com/matt-dray/r.oguelike, https://matt-dray.github.io/r.oguelike/
 BugReports: https://github.com/matt-dray/r.oguelike/issues
@@ -16,5 +17,6 @@ Imports:
     crayon,
     keypress
 Suggests: 
+    covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

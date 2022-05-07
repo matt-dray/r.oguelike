@@ -3,7 +3,9 @@
 #' Procedurally generate a tile-based ASCII-character dungeon map. Creates a
 #' tile-based map of user-specified size; places randomly a user-specified
 #' number of rooms; connects them with a continuous corridor; and iteratively
-#' expands the interior space by sampling from adjacent tiles.
+#' expands the interior space by sampling from adjacent tiles. Note: much of
+#' this function has been absorbed into the \code{\link{start_game}} function,
+#' but \code{\link{generate_dungeon}} will continue to be exported for now.
 #'
 #' @param iterations Numeric. How many times to 'grow' iteratively the dungeon
 #'     rooms, where tiles adjacent to current floor tiles (\code{.}) have a
