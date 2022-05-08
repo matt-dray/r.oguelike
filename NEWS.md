@@ -4,6 +4,7 @@
 * Added 'quit' keypress (`0`) to exit game.
 * Updated function documentation/comments and some variable names for clarity.
 * Updated README given dungeon map changes.
+* Added hex sticker design, favicons.
 
 # r.oguelike 0.0.0.9005
 
