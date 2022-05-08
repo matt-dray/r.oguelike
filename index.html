@@ -9,6 +9,12 @@
     heavily by roguelike games, particularly Rogue (1980) itself. Work in 
     progress.">
 <title>Play a Roguelike Game In The Console • r.oguelike</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="deps/_Courier%20Prime-0.4.1/font.css" rel="stylesheet">
@@ -18,6 +24,7 @@
 <meta property="og:description" content="Play a simple ASCII-only tile-based game in the console inspired 
     heavily by roguelike games, particularly Rogue (1980) itself. Work in 
     progress.">
+<meta property="og:image" content="https://matt-dray.github.io/r.oguelike/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -66,17 +73,19 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="roguelike">{r.oguelike}<a class="anchor" aria-label="anchor" href="#roguelike"></a>
-</h1></div>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="roguelike-">{r.oguelike} <a class="anchor" aria-label="anchor" href="#roguelike-"></a>
+</h1>
+</div>
 <!-- badges: start -->
 <!-- badges: end --><p>A work-in-progress tile-based <a href="https://en.wikipedia.org/wiki/Roguelike" class="external-link">roguelike game</a> for R.</p>
-<p>Visit <a href="https://matt-dray.github.io/r.oguelike/reference/start_game.html" class="external-link">the documentation website</a> or read more <a href="https://www.rostrum.blog/2022/04/25/r.oguelike-dev/" class="external-link">in the inaugural blogpost</a>. See <a href="https://github.com/matt-dray/r.oguelike/issues" class="external-link">the issues</a> for future plans or to suggest improvements.</p>
+<p>Visit <a href="https://matt-dray.github.io/r.oguelike/reference/start_game.html">the documentation website</a> or read more <a href="https://www.rostrum.blog/2022/04/25/r.oguelike-dev/" class="external-link">in the inaugural blogpost</a>. See <a href="https://github.com/matt-dray/r.oguelike/issues" class="external-link">the issues</a> for future plans or to suggest improvements.</p>
 <p>You can install {r.oguelike} from GitHub via {remotes} (packages <a href="https://github.com/r-lib/crayon" class="external-link">{crayon}</a> and <a href="https://github.com/gaborcsardi/keypress" class="external-link">{keypress}</a> are also installed):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="fu">install_github</span><span class="op">(</span><span class="st">"matt-dray/r.oguelike"</span><span class="op">)</span></code></pre></div>
 <p>You could also <a href="https://mybinder.org/v2/gh/matt-dray/play-r.oguelike/main?urlpath=rstudio" class="external-link">launch an instance of RStudio in the browser</a>, thanks to <a href="https://mybinder.org/" class="external-link">Binder</a>, with {r.oguelike} preinstalled.</p>
-<p>Use <code><a href="reference/start_game.html">start_game()</a></code> to begin. You can adjust the default parameters; see <code><a href="reference/start_game.html">?start_game</a></code> or <a href="https://matt-dray.github.io/r.oguelike/reference/start_game.html" class="external-link">visit the documentation website</a> for details.</p>
+<p>Use <code><a href="reference/start_game.html">start_game()</a></code> to begin. You can adjust the default parameters; see <code><a href="reference/start_game.html">?start_game</a></code> or <a href="https://matt-dray.github.io/r.oguelike/reference/start_game.html">visit the documentation website</a> for details.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">r.oguelike</span><span class="fu">::</span><span class="fu"><a href="reference/start_game.html">start_game</a></span><span class="op">(</span>
   iterations <span class="op">=</span> <span class="fl">3</span>,

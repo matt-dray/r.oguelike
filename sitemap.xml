@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/404.html</loc>
   </url>
   <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/generate_dungeon.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/reference/generate_dungeon.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/r.oguelike-package.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/reference/r.oguelike-package.html</loc>
   </url>
   <url>
-    <loc>/reference/start_game.html</loc>
+    <loc>https://matt-dray.github.io/r.oguelike/reference/start_game.html</loc>
   </url>
 </urlset>

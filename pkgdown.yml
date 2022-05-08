@@ -2,5 +2,8 @@ pandoc: 2.7.3
 pkgdown: 2.0.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-05-07T16:12Z
+last_built: 2022-05-08T11:48Z
+urls:
+  reference: https://matt-dray.github.io/r.oguelike/reference
+  article: https://matt-dray.github.io/r.oguelike/articles
 
