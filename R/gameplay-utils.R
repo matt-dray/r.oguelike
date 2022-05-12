@@ -213,8 +213,8 @@
 #'   'right' to move, '1' to eat an apple, '0' to exit).
 #' @noRd
 .move_player <- function(
-    room,
-    kp = c("up", "down", "left", "right", "1", "0")
+  room,
+  kp = c("up", "down", "left", "right", "1", "0")
 ) {
 
   if (!inherits(room, "matrix")) {
@@ -255,5 +255,37 @@
   room[player_loc] <- "@"  # place at new location
 
   return(room)
+
+}
+
+
+.move_enemy <- function(game_map) {
+
+  if (!inherits(game_map, "matrix")) {
+    stop("Argument 'game_map' must be a matrix.")
+  }
+
+  enemy_loc <- which(game_map == "E")
+  game_map[enemy_loc] <- "."
+
+  map_width <- ncol(game_map)
+
+  possible_tiles <- c(
+    current_tile = enemy_loc,
+    n_tile = enemy_loc - 1,
+    s_tile = enemy_loc + 1,
+    e_tile = enemy_loc + map_width,
+    w_tile = enemy_loc - map_width
+  )
+
+  is_floor_tile <- (game_map[possible_tiles] == ".")
+
+  tiles_to_sample <- possible_tiles[is_floor_tile]
+
+  enemy_loc <- sample(tiles_to_sample, 1)
+
+  game_map[enemy_loc] <- "E"
+
+  return(game_map)
 
 }

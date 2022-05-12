@@ -147,6 +147,7 @@ start_game <- function(
 
     }
 
+    game_map <- .move_enemy(game_map)
     game_map <- .move_player(game_map, kp)
 
     if (kp != "1") {
@@ -154,6 +155,7 @@ start_game <- function(
     }
 
     player_loc <- which(game_map == "@")
+    enemy_loc <- which(game_map == "E")
 
     if (length(gold_loc) != 0) {
 
