@@ -19,7 +19,7 @@
 
 }
 
-#' #' Generate A Dungeon Map
+#' Generate A Dungeon Map
 #' @param iterations Numeric. How many times to 'grow' iteratively the dungeon
 #'     rooms, where tiles adjacent to current floor tiles (\code{.}) have a
 #'     random chance of becoming floor tiles themselves with each iteration.
@@ -208,25 +208,25 @@
 }
 
 #' Move Player Character And Increment Counters
-#' @param room Matrix. 2D room layout.
+#' @param game_map Matrix. 2D room layout.
 #' @param kp Character. Outcome of keypress input (i.e. 'up', 'down', 'left',
 #'   'right' to move, '1' to eat an apple, '0' to exit).
 #' @noRd
 .move_player <- function(
-    room,
-    kp = c("up", "down", "left", "right", "1", "0")
+  game_map,
+  kp = c("up", "down", "left", "right", "1", "0")
 ) {
 
-  if (!inherits(room, "matrix")) {
+  if (!inherits(game_map, "matrix")) {
     stop("Argument 'room' must be a matrix.")
   }
 
   kp <- match.arg(kp)
 
-  player_loc <- which(room == "@")
-  room[player_loc] <- "."  # replace old location with floor tile
+  player_loc <- which(game_map == "@")
+  game_map[player_loc] <- "."  # replace old location with floor tile
 
-  room_y_max <- nrow(room)
+  room_y_max <- nrow(game_map)
 
   if (kp %in% c("up", "down", "left", "right")) {
 
@@ -246,14 +246,48 @@
       move_to <- player_loc - room_y_max
     }
 
-    if (room[move_to] != "#") {
+    if (game_map[move_to] != "#") {
       player_loc <- move_to
     }
 
   }
 
-  room[player_loc] <- "@"  # place at new location
+  game_map[player_loc] <- "@"  # place at new location
 
-  return(room)
+  return(game_map)
+
+}
+
+#' Move Enemy Character
+#' @param game_map Matrix. 2D room layout.
+#' @noRd
+.move_enemy <- function(game_map) {
+
+  if (!inherits(game_map, "matrix")) {
+    stop("Argument 'game_map' must be a matrix.")
+  }
+
+  enemy_loc <- which(game_map == "E")
+  game_map[enemy_loc] <- "."
+
+  map_y_max <- nrow(game_map)
+
+  possible_tiles <- c(
+    current_tile = enemy_loc,
+    n_tile = enemy_loc - 1,
+    s_tile = enemy_loc + 1,
+    e_tile = enemy_loc + map_y_max,
+    w_tile = enemy_loc - map_y_max
+  )
+
+  is_floor_tile <- (game_map[possible_tiles] == ".")
+
+  tiles_to_sample <- possible_tiles[is_floor_tile]
+
+  enemy_loc <- sample(tiles_to_sample, 1)
+
+  game_map[enemy_loc] <- "E"
+
+  return(game_map)
 
 }

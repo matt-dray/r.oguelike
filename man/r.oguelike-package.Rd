@@ -6,6 +6,8 @@
 \alias{r.oguelike-package}
 \title{r.oguelike: Play a Roguelike Game In The Console}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 Play a simple ASCII-only tile-based game in the console inspired heavily by roguelike games, particularly Rogue (1980) itself. Work in progress.
 }
 \seealso{

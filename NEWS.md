@@ -1,3 +1,7 @@
+# r.oguelike 0.0.0.9007
+
+* Made the enemy move randomly, avoiding non-floor tiles (towards #8).
+
 # r.oguelike 0.0.0.9006
 
 * Integrated sub-functions of `generate_dungeon()` into `start_game()` (#7), replacing simple rectangular rooms.
