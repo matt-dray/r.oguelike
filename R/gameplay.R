@@ -147,7 +147,16 @@ start_game <- function(
 
     }
 
-    game_map <- .move_enemy(game_map)
+    if (length(enemy_loc) != 0) {
+
+      if (player_loc != enemy_loc) {
+        game_map <- .move_enemy(game_map)  # move enemy before player
+      }
+
+    }
+
+    enemy_loc <- which(game_map == "E")
+
     game_map <- .move_player(game_map, kp)
 
     if (kp != "1") {
@@ -155,7 +164,6 @@ start_game <- function(
     }
 
     player_loc <- which(game_map == "@")
-    enemy_loc <- which(game_map == "E")
 
     if (length(gold_loc) != 0) {
 
@@ -166,6 +174,18 @@ start_game <- function(
         gold <- gold + gold_rand
 
         status_msg <- paste0("Found gold (+", gold_rand, " $)")
+
+      }
+
+    }
+
+    if (length(food_loc) != 0) {
+
+      if (player_loc == food_loc) {
+
+        food <- food + 1
+
+        status_msg <- "Collected apple (+1 a)"
 
       }
 
@@ -201,18 +221,6 @@ start_game <- function(
           }
 
         }
-
-      }
-
-    }
-
-    if (length(food_loc) != 0) {
-
-      if (player_loc == food_loc) {
-
-        food <- food + 1
-
-        status_msg <- "Collected apple (+1 a)"
 
       }
 
