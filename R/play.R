@@ -114,11 +114,11 @@ start_game <- function(
     .cat_stats(turns, hp, gold, food)
     message(status_msg)
 
-    # Identify location of objects and enemies
+    # Identify location of objects ----
 
     gold_loc  <- which(game_map == "$")
-    enemy_loc <- which(game_map == "E")
     food_loc  <- which(game_map == "a")
+    enemy_loc <- which(game_map == "E")
 
     # Fetch user input ----
 
@@ -167,13 +167,6 @@ start_game <- function(
 
     }
 
-    # Move enemy ----
-
-    if (length(which(game_map == "E")) > 0) {  # check for enemy
-      dist <- .get_distance_map(game_map)  # calculate distance to player
-      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
-    }
-
     # Move player ----
 
     game_map <- .move_player(game_map, kp)
@@ -182,13 +175,13 @@ start_game <- function(
       status_msg <- paste("Moved", kp)
     }
 
-    # Allow player interactions ----
-
     player_loc <- which(game_map == "@")  # matrix index of player
+
+    # Execute player-object interactions ----
 
     ## Engage enemy ----
 
-    if (length(enemy_loc) != 0) {
+    if (length(enemy_loc) > 0) {
 
       if (player_loc == enemy_loc) {
 
@@ -225,7 +218,7 @@ start_game <- function(
 
     ## Collect gold ----
 
-    if (length(gold_loc) != 0) {
+    if (length(gold_loc) > 0) {
 
       gold_rand <- sample(1:3, 1)
 
@@ -241,7 +234,7 @@ start_game <- function(
 
     ## Collect apple ----
 
-    if (length(food_loc) != 0) {
+    if (length(food_loc) > 0) {
 
       if (player_loc == food_loc) {
 
@@ -251,6 +244,16 @@ start_game <- function(
 
       }
 
+    }
+
+    # Move enemy ----
+
+    enemy_loc <- which(game_map == "E")  # check if enemy is alive
+
+    if (length(enemy_loc) > 0) {  # check for enemy
+      dist <- .get_distance_map(game_map)  # calculate distance to player
+      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
+      enemy_loc <- which(game_map == "E")
     }
 
     # Handle turn count ----
