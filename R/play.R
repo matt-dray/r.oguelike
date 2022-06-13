@@ -57,9 +57,13 @@ start_game <- function(
     is_colour = TRUE
 ) {
 
+  # Trap input errorw ----
+
   if (!inherits(max_turns, "numeric")) {
     "Argument 'max_turns' must be a single numeric value.\n"
   }
+
+  # Check for {keypress} support ----
 
   supports_keypress <- keypress::has_keypress_support()
   is_rstudio <- Sys.getenv("RSTUDIO") == "1"
@@ -67,17 +71,6 @@ start_game <- function(
   game_map <- .make_dungeon(
     iterations, n_row, n_col, n_rooms, is_snake, is_organic
   )
-
-  turns  <- max_turns
-  hp     <- 10
-  max_hp <- 10
-  atk    <- 1
-  gold   <- 0
-  food   <- 0
-
-  # Global enemy stats
-  enemy_hp  <- sample(3:5, 1)
-  enemy_atk <- 1
 
   if (supports_keypress) {
     status_msg <- "Press arrow keys to move, 1 to eat apple, 0 to exit"
@@ -88,9 +81,24 @@ start_game <- function(
       "Press W, A, S or D then Enter to move, 1 to eat apple, 0 to exit"
   }
 
+  # Initiate stats ----
+
+  turns  <- max_turns
+  hp     <- 10
+  max_hp <- 10
+  atk    <- 1
+  gold   <- 0
+  food   <- 0
+  enemy_hp  <- sample(3:5, 1)
+  enemy_atk <- 1
+
+  # Begin loop ----
+
   is_alive <- TRUE
 
   while (is_alive) {
+
+    # Wipe the screen ----
 
     if (supports_keypress) {
       system2("clear")
@@ -100,15 +108,25 @@ start_game <- function(
       cat("\014")
     }
 
+    # Print user interface ----
+
     .cat_map(game_map, is_colour)
     .cat_stats(turns, hp, gold, food)
     message(status_msg)
+
+    # Identify location of objects and enemies
 
     gold_loc  <- which(game_map == "$")
     enemy_loc <- which(game_map == "E")
     food_loc  <- which(game_map == "a")
 
+    # Fetch user input ----
+
     kp <- .accept_keypress()
+
+    # Respond to menu options ----
+
+    ## Quit ----
 
     if (kp == "0") {
 
@@ -124,6 +142,8 @@ start_game <- function(
       }
 
     }
+
+    ## Eat apple ----
 
     if (kp == "1") {
 
@@ -147,27 +167,26 @@ start_game <- function(
 
     }
 
+    # Move enemy ----
+
+    if (length(which(game_map == "E")) > 0) {  # check for enemy
+      dist <- .get_distance_map(game_map)  # calculate distance to player
+      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
+    }
+
+    # Move player ----
+
     game_map <- .move_player(game_map, kp)
 
     if (kp != "1") {
       status_msg <- paste("Moved", kp)
     }
 
-    player_loc <- which(game_map == "@")
+    # Allow player interactions ----
 
-    if (length(gold_loc) != 0) {
+    player_loc <- which(game_map == "@")  # matrix index of player
 
-      gold_rand <- sample(1:3, 1)
-
-      if (player_loc == gold_loc) {
-
-        gold <- gold + gold_rand
-
-        status_msg <- paste0("Found gold (+", gold_rand, " $)")
-
-      }
-
-    }
+    ## Engage enemy ----
 
     if (length(enemy_loc) != 0) {
 
@@ -204,6 +223,24 @@ start_game <- function(
 
     }
 
+    ## Collect gold ----
+
+    if (length(gold_loc) != 0) {
+
+      gold_rand <- sample(1:3, 1)
+
+      if (player_loc == gold_loc) {
+
+        gold <- gold + gold_rand
+
+        status_msg <- paste0("Found gold (+", gold_rand, " $)")
+
+      }
+
+    }
+
+    ## Collect apple ----
+
     if (length(food_loc) != 0) {
 
       if (player_loc == food_loc) {
@@ -215,6 +252,8 @@ start_game <- function(
       }
 
     }
+
+    # Handle turn count ----
 
     turns <- turns - 1
 
