@@ -167,6 +167,17 @@ start_game <- function(
 
     }
 
+
+    # Move enemy ----
+
+    enemy_loc <- which(game_map == "E")  # check if enemy is alive
+
+    if (length(enemy_loc) > 0) {  # check for enemy
+      dist <- .get_distance_map(game_map)  # calculate distance to player
+      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
+      enemy_loc <- which(game_map == "E")
+    }
+
     # Move player ----
 
     game_map <- .move_player(game_map, kp)
@@ -246,15 +257,6 @@ start_game <- function(
 
     }
 
-    # Move enemy ----
-
-    enemy_loc <- which(game_map == "E")  # check if enemy is alive
-
-    if (length(enemy_loc) > 0) {  # check for enemy
-      dist <- .get_distance_map(game_map)  # calculate distance to player
-      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
-      enemy_loc <- which(game_map == "E")
-    }
 
     # Handle turn count ----
 
