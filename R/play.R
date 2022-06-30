@@ -167,7 +167,6 @@ start_game <- function(
 
     }
 
-
     # Move enemy ----
 
     enemy_loc <- which(game_map == "E")  # check if enemy is alive
@@ -192,7 +191,19 @@ start_game <- function(
 
     ## Engage enemy ----
 
-    if (length(enemy_loc) > 0) {
+    if (length(food_loc) != 0) {
+
+      if (player_loc == food_loc) {
+
+        food <- food + 1
+
+        status_msg <- "Collected apple (+1 a)"
+
+      }
+
+    }
+
+    if (length(enemy_loc) != 0) {
 
       if (player_loc == enemy_loc) {
 

@@ -93,7 +93,7 @@ Moved down
 Input:
 ```
 
-Collect the gold (`$`). Auto-battle an enemy (`E`). Collect an apple (`a`) for your inventory, then eat it with a keypress input of `1`. You’ll die if you run out of `HP` or if you reach the maximum number of turns allowed (`T`). You can quit the game with `0`.
+Collect the gold (`$`). Auto-battle the randomly-moving enemy (`E`). Collect an apple (`a`) for your inventory, then eat it with a keypress input of `1`. You’ll die if you run out of `HP` or if you reach the maximum number of turns allowed (`T`). You can quit the game with `0`.
 
 ## Code of Conduct
 
