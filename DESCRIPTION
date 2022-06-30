@@ -1,6 +1,6 @@
 Package: r.oguelike
 Title: Play a Roguelike Game In The Console
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R:
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
 Description: Play a simple ASCII-only tile-based game in the console inspired 

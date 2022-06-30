@@ -1,3 +1,7 @@
+# r.oguelike 0.0.0.9008
+
+* Made the enemy use breadth-first pathfinding to move towards the player (#8).
+
 # r.oguelike 0.0.0.9007
 
 * Made the enemy move randomly, avoiding non-floor tiles (towards #8).
