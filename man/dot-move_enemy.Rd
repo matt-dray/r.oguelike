@@ -9,7 +9,7 @@
 \arguments{
 \item{room}{Matrix. 2D room layout.}
 
-\item{current}{Numeric. Matrix index of tile to inspect.}
+\item{dist}{Matrix. Tile distance to player.}
 }
 \description{
 Move The Enemy To The Player

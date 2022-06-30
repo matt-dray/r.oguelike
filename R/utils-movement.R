@@ -51,7 +51,7 @@
 
 #' Move The Enemy To The Player
 #' @param room Matrix. 2D room layout.
-#' @param current Numeric. Matrix index of tile to inspect.
+#' @param dist Matrix. Tile distance to player.
 .move_enemy <- function(room, dist) {
 
   en_loc <- which(room == "E")
