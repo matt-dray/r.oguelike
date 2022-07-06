@@ -39,6 +39,9 @@
 
     if (room[move_to] != "#") {
       player_loc <- move_to
+      .sfx_move()
+    } else {
+      .sfx_edge()
     }
 
   }

@@ -157,6 +157,7 @@ start_game <- function(
           food <- food - 1
           hp <- hp + 1
           status_msg <- "Ate apple (+1 HP)"
+          .sfx_apple_eat()
         }
 
         if (hp == max_hp) {
@@ -191,18 +192,6 @@ start_game <- function(
 
     ## Engage enemy ----
 
-    if (length(food_loc) != 0) {
-
-      if (player_loc == food_loc) {
-
-        food <- food + 1
-
-        status_msg <- "Collected apple (+1 a)"
-
-      }
-
-    }
-
     if (length(enemy_loc) != 0) {
 
       if (player_loc == enemy_loc) {
@@ -230,6 +219,7 @@ start_game <- function(
             status_msg <- paste0("You died (0 HP)! Try again.")
             is_battle <- FALSE
             is_alive <- FALSE
+            .sfx_end()
           }
 
         }
@@ -250,6 +240,8 @@ start_game <- function(
 
         status_msg <- paste0("Found gold (+", gold_rand, " $)")
 
+        .sfx_gold()
+
       }
 
     }
@@ -264,10 +256,11 @@ start_game <- function(
 
         status_msg <- "Collected apple (+1 a)"
 
+        .sfx_apple_collect()
+
       }
 
     }
-
 
     # Handle turn count ----
 
@@ -275,6 +268,7 @@ start_game <- function(
 
     if (turns == 0) {
       message("You died (max turns)! Try again.")
+      .sfx_end()
       is_alive <- FALSE
     }
 
