@@ -12,13 +12,13 @@
 
 #' Sound Effect: Collect Apple
 #' @noRd
-.sfx_apple_collect <- function(variables) {
+.sfx_apple_collect <- function() {
   sonify::sonify(x = 0:1, y = c(0, 1), duration = 0.05)
 }
 
 #' Sound Effect: Eat Apple
 #' @noRd
-.sfx_apple_eat <- function(variables) {
+.sfx_apple_eat <- function() {
   sonify::sonify(x = 0:1, y = c(1, 0), duration = 0.05)
 }
 
