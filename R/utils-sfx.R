@@ -29,10 +29,18 @@
   sonify::sonify(x = 1, y = 1, duration = 0.05, flim = c(1000, 1000))
 }
 
-#' Sound Effect: End game
+#' Sound Effect: Defeat Enemy
+#' @noRd
+.sfx_enemy_defeat <- function() {
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(600, 600))
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(600, 600))
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(800, 800))
+}
+
+#' Sound Effect: End Game
 #' @noRd
 .sfx_end <- function() {
-  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1)
-  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1)
-  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1)
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(600, 600))
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(600, 600))
+  sonify::sonify(x = 0:1, y = rep(1, 2), duration = 0.1, flim = c(400, 400))
 }
