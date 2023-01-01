@@ -204,9 +204,8 @@ start_game <- function(
           enemy_hp <- enemy_hp - atk  # player strikes first
 
           if (enemy_hp == 0) {
-            status_msg <- paste0(
-              "Enemy defeated! (-", start_hp - hp," HP)"
-            )
+            status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+            .sfx_enemy_defeat()
             is_battle <- FALSE
           }
 
@@ -217,9 +216,9 @@ start_game <- function(
 
           if (hp == 0) {
             status_msg <- paste0("You died (0 HP)! Try again.")
+            .sfx_end()
             is_battle <- FALSE
             is_alive <- FALSE
-            .sfx_end()
           }
 
         }
