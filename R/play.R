@@ -57,7 +57,7 @@ start_game <- function(
     is_colour = TRUE
 ) {
 
-  # Trap input errorw ----
+  # Trap input error ----
 
   if (!inherits(max_turns, "numeric")) {
     "Argument 'max_turns' must be a single numeric value.\n"
@@ -98,27 +98,20 @@ start_game <- function(
 
   while (is_alive) {
 
-    # Wipe the screen ----
+    # Wipe screen, print interface ----
 
-    if (supports_keypress) {
-      system2("clear")
-    }
-
-    if (is_rstudio) {
-      cat("\014")
-    }
-
-    # Print user interface ----
-
+    # if (supports_keypress) system2("clear")
+    # if (is_rstudio) cat("\014")
     .cat_map(game_map, is_colour)
     .cat_stats(turns, hp, gold, food)
     message(status_msg)
 
     # Identify location of objects ----
 
-    gold_loc  <- which(game_map == "$")
-    food_loc  <- which(game_map == "a")
-    enemy_loc <- which(game_map == "E")
+    gold_loc   <- which(game_map == "$")
+    food_loc   <- which(game_map == "a")
+    enemy_loc  <- which(game_map == "E")
+    player_loc <- which(game_map == "@")
 
     # Fetch user input ----
 
@@ -167,45 +160,20 @@ start_game <- function(
 
     }
 
-    # Move enemy ----
+    ## Early enemy confront ----
 
-    enemy_loc <- which(game_map == "E")  # check if enemy is alive
+    is_early_intercept <- FALSE
 
-    if (length(enemy_loc) > 0) {  # check for enemy
-      dist <- .get_distance_map(game_map)  # calculate distance to player
-      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
-      enemy_loc <- which(game_map == "E")
-    }
+    if (length(enemy_loc) != 0 & !is_early_intercept) {
 
-    # Move player ----
+      if (
+        (kp == "right" & game_map[player_loc + nrow(game_map)] == "E") |
+        (kp == "left"  & game_map[player_loc - nrow(game_map)] == "E") |
+        (kp == "down"  & game_map[player_loc + 1] == "E") |
+        (kp == "up"    & game_map[player_loc - 1] == "E")
+      ) {
 
-    game_map <- .move_player(game_map, kp)
-
-    if (kp != "1") {
-      status_msg <- paste("Moved", kp)
-    }
-
-    player_loc <- which(game_map == "@")  # matrix index of player
-
-    # Execute player-object interactions ----
-
-    ## Engage enemy ----
-
-    if (length(food_loc) != 0) {
-
-      if (player_loc == food_loc) {
-
-        food <- food + 1
-
-        status_msg <- "Collected apple (+1 a)"
-
-      }
-
-    }
-
-    if (length(enemy_loc) != 0) {
-
-      if (player_loc == enemy_loc) {
+        is_early_intercept <- TRUE
 
         is_battle <- TRUE
         start_hp <- hp
@@ -215,9 +183,8 @@ start_game <- function(
           enemy_hp <- enemy_hp - atk  # player strikes first
 
           if (enemy_hp == 0) {
-            status_msg <- paste0(
-              "Enemy defeated! (-", start_hp - hp," HP)"
-            )
+            status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+            game_map[which(game_map == "E")] <- "."  # delete enemy
             is_battle <- FALSE
           }
 
@@ -230,6 +197,73 @@ start_game <- function(
             status_msg <- paste0("You died (0 HP)! Try again.")
             is_battle <- FALSE
             is_alive <- FALSE
+          }
+
+        }
+
+        .cat_map(game_map, is_colour)
+        .cat_stats(turns, hp, gold, food)
+        message(status_msg)
+
+      }
+
+    }
+
+    # Move enemy ----
+
+    enemy_loc <- which(game_map == "E")  # check if enemy is alive
+
+    if (length(enemy_loc) > 0) {  # check for enemy
+      dist <- .get_distance_map(game_map)  # calculate distance to player
+      game_map <- .move_enemy(game_map, dist, enemy_loc)  # move enemy closer to player
+      enemy_loc <- which(game_map == "E")
+    }
+
+    # Move player ----
+
+    game_map <- .move_player(game_map, kp, player_loc)
+
+    player_loc <- which(game_map == "@")
+
+    if (!is_early_intercept) {
+
+      if (kp %in% c("up", "down", "left", "right")) {
+        status_msg <- paste("Moved", kp)
+      }
+
+      # player_loc <- which(game_map == "@")  # matrix index of player
+
+      # Execute player-object interactions ----
+
+      ## Engage enemy ----
+
+      if (length(enemy_loc) != 0) {
+
+        if (player_loc == enemy_loc) {
+
+          is_battle <- TRUE
+          start_hp <- hp
+
+          while (is_battle) {
+
+            enemy_hp <- enemy_hp - atk  # player strikes first
+
+            if (enemy_hp == 0) {
+              status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+              is_battle <- FALSE
+            }
+
+            if (is_battle) {
+              hp <- hp - enemy_atk
+              turns <- turns - 1
+            }
+
+            if (hp == 0) {
+              status_msg <- paste0("You died (0 HP)! Try again.")
+              is_battle <- FALSE
+              is_alive <- FALSE
+            }
+
           }
 
         }
