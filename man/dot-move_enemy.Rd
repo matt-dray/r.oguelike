@@ -4,12 +4,15 @@
 \alias{.move_enemy}
 \title{Move The Enemy To The Player}
 \usage{
-.move_enemy(room, dist)
+.move_enemy(room, dist, enemy_loc)
 }
 \arguments{
 \item{room}{Matrix. 2D room layout.}
 
 \item{dist}{Matrix. Tile distance to player.}
+
+\item{enemy_loc}{Numeric. Matrix index of the tile occupied by the enemy
+character.}
 }
 \description{
 Move The Enemy To The Player

@@ -6,28 +6,28 @@
 \usage{
 start_game(
   max_turns = Inf,
-  iterations = 5,
-  n_row = 30,
-  n_col = 40,
-  n_rooms = 5,
+  n_row = 20L,
+  n_col = 30L,
+  n_rooms = 5L,
+  iterations = 4L,
   is_snake = FALSE,
   is_organic = TRUE,
   is_colour = TRUE
 )
 }
 \arguments{
-\item{max_turns}{Numeric. How many turns? Default is \code{Inf}(inite).}
+\item{max_turns}{Integer. How many turns? Default is \code{Inf}(inite).}
 
-\item{iterations}{Numeric. How many times to 'grow' iteratively the dungeon
+\item{n_row}{Integer Number of row tiles in the dungeon, i.e. its height.}
+
+\item{n_col}{Integer. Number of column tiles in the dungeon, i.e. its width.}
+
+\item{n_rooms}{Integer Number of rooms to place randomly on the map as
+starting points for iterative growth.}
+
+\item{iterations}{Integer. How many times to 'grow' iteratively the dungeon
 rooms, where tiles adjacent to current floor tiles (\code{.}) have a
 random chance of becoming floor tiles themselves with each iteration.}
-
-\item{n_row}{Numeric. Number of row tiles in the dungeon, i.e. its height.}
-
-\item{n_col}{Numeric. Number of column tiles in the dungeon, i.e. its width.}
-
-\item{n_rooms}{Numeric. Number of rooms to place randomly on the map as
-starting points for iterative growth.}
 
 \item{is_snake}{Logical. Should the room start points be connected randomly
 (\code{FALSE}, the default) or from left to right across the room matrix
@@ -47,7 +47,8 @@ Nothing. Clears the console and prints to it with
 \description{
 Clears the console and starts a game of 'r.oguelike' by printing a map with
 an inventory and status message. The user inputs a keypress to move the
-character and explore the map, fighting enemies and collecting objects.
+character and explore the map, fighting enemies and collecting objects. This
+is a toy; a proof-of-concept.
 }
 \details{
 Use the WASD keys to move up, left, down and right. Use the '1' key to eat
@@ -67,6 +68,12 @@ Symbols used in the game are as follows:
 \item{\code{E}} {enemy (3 HP max, -1 HP attack damage)}
 \item{\code{a}} {apple (+1 HP)}
 }
+
+When \code{TRUE}, \code{is_snake} will tend to create one continuous cavern;
+\code{is_organic} will tend to create more 'natural' looking caves.
+
+Arguments that take integer values are coerced to integer if provided as
+numeric values.
 }
 \examples{
 \dontrun{start_game()}
