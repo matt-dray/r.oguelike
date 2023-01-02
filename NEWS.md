@@ -1,3 +1,10 @@
+# r.oguelike 0.0.0.9009
+
+* Fixed bug: ensured collecting one apple adds only one apple to the inventory (#31).
+* Fixed bug: eliminated 'length zero' error, which was reachable in certain battle states (#29, thank you for the issue @trickytank).
+* Limited dungeon dimensions to 10 by 10 to reduce likelihood of small-dungeon drawing bug (#32).
+* Moved `iterations` argument of `start_game()` after `n_rooms`, which is more logical.
+
 # r.oguelike 0.0.0.9008
 
 * Made the enemy use breadth-first pathfinding to move towards the player (#8).

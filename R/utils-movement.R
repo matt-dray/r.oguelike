@@ -2,10 +2,13 @@
 #' @param room Matrix. 2D room layout.
 #' @param kp Character. Outcome of keypress input (i.e. 'up', 'down', 'left',
 #'   'right' to move, '1' to eat an apple, '0' to exit).
+#' @param player_loc Numeric. Matrix index of the tile occupied by the player
+#'     character.
 #' @noRd
 .move_player <- function(
     room,
-    kp = c("up", "down", "left", "right", "1", "0")
+    kp = c("up", "down", "left", "right", "1", "0"),
+    player_loc
 ) {
 
   if (!inherits(room, "matrix")) {
@@ -14,7 +17,6 @@
 
   kp <- match.arg(kp)
 
-  player_loc <- which(room == "@")
   room[player_loc] <- "."  # replace old location with floor tile
 
   room_y_max <- nrow(room)
@@ -52,17 +54,17 @@
 #' Move The Enemy To The Player
 #' @param room Matrix. 2D room layout.
 #' @param dist Matrix. Tile distance to player.
-.move_enemy <- function(room, dist) {
+#' @param enemy_loc Numeric. Matrix index of the tile occupied by the enemy
+#'     character.
+.move_enemy <- function(room, dist, enemy_loc) {
 
-  en_loc <- which(room == "E")
-  player_loc <- which(room == "@")
   n_rows <- nrow(room)
 
   ind <- c(
-    n = en_loc - 1,
-    s = en_loc + 1,
-    e = en_loc + n_rows,
-    w = en_loc - n_rows
+    n = enemy_loc - 1,
+    s = enemy_loc + 1,
+    e = enemy_loc + n_rows,
+    w = enemy_loc - n_rows
   )
 
   tiles <- c(
@@ -79,12 +81,11 @@
     w = if (tiles["w"] %in% c(".", "@")) dist[ind["w"]]
   )
 
-
   direction <- sample(names(dist[dist == min(dist)]), 1)
-  en_loc_new <- ind[names(ind) == direction]
+  enemy_loc_new <- ind[names(ind) == direction]
 
-  room[en_loc] <- "."
-  room[en_loc_new] <- "E"
+  room[enemy_loc] <- "."
+  room[enemy_loc_new] <- "E"
 
   room
 

@@ -3,16 +3,17 @@
 #'
 #' Clears the console and starts a game of 'r.oguelike' by printing a map with
 #' an inventory and status message. The user inputs a keypress to move the
-#' character and explore the map, fighting enemies and collecting objects.
+#' character and explore the map, fighting enemies and collecting objects. This
+#' is a toy; a proof-of-concept.
 #'
-#' @param max_turns Numeric. How many turns? Default is \code{Inf}(inite).
-#' @param iterations Numeric. How many times to 'grow' iteratively the dungeon
+#' @param max_turns Integer. How many turns? Default is \code{Inf}(inite).
+#' @param n_row Integer Number of row tiles in the dungeon, i.e. its height.
+#' @param n_col Integer. Number of column tiles in the dungeon, i.e. its width.
+#' @param n_rooms Integer Number of rooms to place randomly on the map as
+#'     starting points for iterative growth.
+#' @param iterations Integer. How many times to 'grow' iteratively the dungeon
 #'     rooms, where tiles adjacent to current floor tiles (\code{.}) have a
 #'     random chance of becoming floor tiles themselves with each iteration.
-#' @param n_row Numeric. Number of row tiles in the dungeon, i.e. its height.
-#' @param n_col Numeric. Number of column tiles in the dungeon, i.e. its width.
-#' @param n_rooms Numeric. Number of rooms to place randomly on the map as
-#'     starting points for iterative growth.
 #' @param is_snake Logical. Should the room start points be connected randomly
 #'     (\code{FALSE}, the default) or from left to right across the room matrix
 #'     (\code{TRUE})? See details.
@@ -41,36 +42,69 @@
 #'     \item{\code{a}} {apple (+1 HP)}
 #'   }
 #'
+#'  When \code{TRUE}, \code{is_snake} will tend to create one continuous cavern;
+#'  \code{is_organic} will tend to create more 'natural' looking caves.
+#'
+#'  Arguments that take integer values are coerced to integer if provided as
+#'  numeric values.
+#'
 #' @return Nothing. Clears the console and prints to it with
 #'     \code{\link[base]{cat}}.
 #' @export
 #'
-#' @examples \dontrun{start_game()}
+#' @examples
+#' \dontrun{start_game()}
 start_game <- function(
-    max_turns = Inf,
-    iterations = 5,
-    n_row = 30,
-    n_col = 40,
-    n_rooms = 5,
-    is_snake = FALSE,
+    max_turns  = Inf,
+    n_row      = 20L,
+    n_col      = 30L,
+    n_rooms    = 5L,
+    iterations = 4L,
+    is_snake   = FALSE,
     is_organic = TRUE,
-    is_colour = TRUE
+    is_colour  = TRUE
 ) {
 
-  # Trap input errorw ----
+  # Checks ----
 
-  if (!inherits(max_turns, "numeric")) {
-    "Argument 'max_turns' must be a single numeric value.\n"
+  if (
+    !is.numeric(max_turns) |
+    !is.numeric(n_row) |
+    !is.numeric(n_col) |
+    !is.numeric(n_rooms) |
+    !is.numeric(iterations)
+  ) {
+    stop(
+      "Arguments 'max_turns', 'iterations', 'n_row', 'n_col' and 'n_rooms' must be numeric.",
+      call. = FALSE
+    )
   }
 
-  # Check for {keypress} support ----
+  if (n_row < 10 | n_col < 10) {
+    stop("Arguments 'n_row' and 'n_col' must be 10 or greater.", call. = FALSE)
+  }
 
-  supports_keypress <- keypress::has_keypress_support()
-  is_rstudio <- Sys.getenv("RSTUDIO") == "1"
+  if (!is.logical(is_snake) | !is.logical(is_organic) | !is.logical(is_colour)) {
+    stop(
+      "Arguments 'is_snake', 'is_organic' and 'is_colour' must be logical.",
+      call. = FALSE
+    )
+  }
+
+  if (max_turns != Inf) max_turns <- as.integer(max_turns)
+  n_row      <- as.integer(n_row)
+  n_col      <- as.integer(n_col)
+  n_rooms    <- as.integer(n_rooms)
+  iterations <- as.integer(iterations)
+
+  # Game setup ----
 
   game_map <- .make_dungeon(
     iterations, n_row, n_col, n_rooms, is_snake, is_organic
   )
+
+  supports_keypress <- keypress::has_keypress_support()
+  is_rstudio <- Sys.getenv("RSTUDIO") == "1"
 
   if (supports_keypress) {
     status_msg <- "Press arrow keys to move, 1 to eat apple, 0 to exit"
@@ -81,54 +115,47 @@ start_game <- function(
       "Press W, A, S or D then Enter to move, 1 to eat apple, 0 to exit"
   }
 
-  # Initiate stats ----
+  # Initiate constants ----
 
-  turns  <- max_turns
-  hp     <- 10
-  max_hp <- 10
-  atk    <- 1
-  gold   <- 0
-  food   <- 0
+  turns     <- max_turns
+  hp        <- 10
+  max_hp    <- 10
+  atk       <- 1
+  gold      <- 0
+  gold_rand <- sample(1:3, 1)
+  food      <- 0
   enemy_hp  <- sample(3:5, 1)
   enemy_atk <- 1
 
-  # Begin loop ----
+  # Enter game loop ----
 
   is_alive <- TRUE
 
   while (is_alive) {
 
-    # Wipe the screen ----
+    # Refresh interface ----
 
-    if (supports_keypress) {
-      system2("clear")
-    }
-
-    if (is_rstudio) {
-      cat("\014")
-    }
-
-    # Print user interface ----
-
+    if (supports_keypress) system2("clear")
+    if (is_rstudio) cat("\014")
     .cat_map(game_map, is_colour)
     .cat_stats(turns, hp, gold, food)
     message(status_msg)
 
-    # Identify location of objects ----
+    # Locate objects ----
 
-    gold_loc  <- which(game_map == "$")
-    food_loc  <- which(game_map == "a")
-    enemy_loc <- which(game_map == "E")
+    gold_loc   <- which(game_map == "$")
+    food_loc   <- which(game_map == "a")
+    enemy_loc  <- which(game_map == "E")
+    player_loc <- which(game_map == "@")
 
-    # Fetch user input ----
+    # Get user input ----
 
     kp <- .accept_keypress()
 
-    # Respond to menu options ----
 
-    ## Quit ----
+    # Menu items ----
 
-    if (kp == "0") {
+    if (kp == "0") {  # quit
 
       answer <- readline("Quit? Type 'y' or 'n': ")
 
@@ -143,9 +170,7 @@ start_game <- function(
 
     }
 
-    ## Eat apple ----
-
-    if (kp == "1") {
+    if (kp == "1") {  # eat apple
 
       if (food == 0) {
         status_msg <- "You have no apples."
@@ -167,43 +192,63 @@ start_game <- function(
 
     }
 
-    # Move enemy ----
+    # Player actions ----
 
-    enemy_loc <- which(game_map == "E")  # check if enemy is alive
+    game_map <- .move_player(game_map, kp, player_loc)
+    player_loc <- which(game_map == "@")
 
-    if (length(enemy_loc) > 0) {  # check for enemy
-      dist <- .get_distance_map(game_map)  # calculate distance to player
-      game_map <- .move_enemy(game_map, dist)  # move enemy closer to player
-      enemy_loc <- which(game_map == "E")
-    }
-
-    # Move player ----
-
-    game_map <- .move_player(game_map, kp)
-
-    if (kp != "1") {
+    if (kp %in% c("up", "down", "left", "right")) {
       status_msg <- paste("Moved", kp)
     }
 
-    player_loc <- which(game_map == "@")  # matrix index of player
+    if (length(gold_loc) > 0 && player_loc == gold_loc) {
+      gold <- gold + gold_rand
+      status_msg <- paste0("Found gold (+", gold_rand, " $)")
+    }
 
-    # Execute player-object interactions ----
+    if (length(food_loc) > 0 && player_loc == food_loc) {
+      food <- food + 1
+      status_msg <- "Collected apple (+1 a)"
+    }
 
-    ## Engage enemy ----
+    if (length(enemy_loc) != 0 && player_loc == enemy_loc) {
 
-    if (length(food_loc) != 0) {
+      is_battle <- TRUE
+      start_hp <- hp
 
-      if (player_loc == food_loc) {
+      while (is_battle) {
 
-        food <- food + 1
+        enemy_hp <- enemy_hp - atk
 
-        status_msg <- "Collected apple (+1 a)"
+        if (enemy_hp == 0) {
+          status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+          enemy_loc <- NULL
+          is_battle <- FALSE
+        }
+
+        if (is_battle) {
+          hp <- hp - enemy_atk
+          turns <- turns - 1
+        }
+
+        if (hp == 0) {
+          status_msg <- paste0("You died (0 HP)! Try again.")
+          game_map[enemy_loc] <- "@"  # overwrite position with enemy symbol
+          is_battle <- FALSE
+          is_alive <- FALSE
+        }
 
       }
 
     }
 
-    if (length(enemy_loc) != 0) {
+    # Enemy actions ----
+
+    if (length(enemy_loc) > 0) {  # check for enemy, may have been defeated
+
+      dist <- .get_distance_map(game_map)  # calculate distance to player
+      game_map <- .move_enemy(game_map, dist, enemy_loc)  # move enemy closer to player
+      enemy_loc <- which(game_map == "E")
 
       if (player_loc == enemy_loc) {
 
@@ -212,17 +257,16 @@ start_game <- function(
 
         while (is_battle) {
 
-          enemy_hp <- enemy_hp - atk  # player strikes first
+          enemy_hp <- enemy_hp - atk
 
           if (enemy_hp == 0) {
-            status_msg <- paste0(
-              "Enemy defeated! (-", start_hp - hp," HP)"
-            )
+            status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+            game_map[enemy_loc] <- "@"  # overwrite position with player symbol
             is_battle <- FALSE
           }
 
           if (is_battle) {
-            hp <- hp - enemy_atk
+            hp    <- hp - enemy_atk
             turns <- turns - 1
           }
 
@@ -238,38 +282,7 @@ start_game <- function(
 
     }
 
-    ## Collect gold ----
-
-    if (length(gold_loc) > 0) {
-
-      gold_rand <- sample(1:3, 1)
-
-      if (player_loc == gold_loc) {
-
-        gold <- gold + gold_rand
-
-        status_msg <- paste0("Found gold (+", gold_rand, " $)")
-
-      }
-
-    }
-
-    ## Collect apple ----
-
-    if (length(food_loc) > 0) {
-
-      if (player_loc == food_loc) {
-
-        food <- food + 1
-
-        status_msg <- "Collected apple (+1 a)"
-
-      }
-
-    }
-
-
-    # Handle turn count ----
+    # Reduce turn count ----
 
     turns <- turns - 1
 
