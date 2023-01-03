@@ -1,15 +1,15 @@
 #' Concatenate And Print A Matrix Of The Game Map
 #' @param room Matrix. 2D map layout.
-#' @param is_colour Logical. Should the characters in the output be coloured
+#' @param has_colour Logical. Should the characters in the output be coloured
 #'     using \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?
 #' @noRd
-.cat_map <- function(game_map, is_colour = TRUE) {
+.cat_map <- function(game_map, has_colour) {
 
   if (!inherits(game_map, "matrix")) {
     stop("Argument 'game_map' must be a matrix.")
   }
 
-  if (is_colour) {
+  if (has_colour) {
 
     game_map[which(game_map == ".")] <- crayon::black(".")
     game_map[which(game_map == "#")] <- crayon::red("#")

@@ -4,11 +4,14 @@
 #'   'right' to move, '1' to eat an apple, '0' to exit).
 #' @param player_loc Numeric. Matrix index of the tile occupied by the player
 #'     character.
+#' @param has_sfx Logical. Should sound effects be used? Defaults to
+#'     \code{TRUE}.
 #' @noRd
 .move_player <- function(
     room,
     kp = c("up", "down", "left", "right", "1", "0"),
-    player_loc
+    player_loc,
+    has_sfx
 ) {
 
   if (!inherits(room, "matrix")) {
@@ -41,6 +44,9 @@
 
     if (room[move_to] != "#") {
       player_loc <- move_to
+      .sfx_move(has_sfx)
+    } else {
+      .sfx_edge(has_sfx)
     }
 
   }

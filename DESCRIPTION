@@ -1,12 +1,14 @@
 Package: r.oguelike
 Title: Play a Roguelike 'Game' in the Console
-Version: 0.0.0.9009
+Version: 0.1.0
 Authors@R:
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
-Description: Play a simple ASCII-only tile-based toy in the console, inspired 
-    heavily by roguelike games like Rogue (1980). Proof of concept.
+Description: Play with a simple ASCII-only tile-based toy in the console, 
+    inspired heavily by roguelike games like Rogue (1980). Proof of concept.
 License: MIT + file LICENSE
-URL: https://github.com/matt-dray/r.oguelike, https://matt-dray.github.io/r.oguelike/
+URL: https://github.com/matt-dray/r.oguelike, 
+    https://matt-dray.github.io/r.oguelike/,
+    https://www.rostrum.blog/tags/r.oguelike/
 BugReports: https://github.com/matt-dray/r.oguelike/issues
 Encoding: UTF-8
 LazyData: true
@@ -14,7 +16,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     crayon,
-    keypress
+    keypress,
+    sonify
 Suggests: 
     covr,
     testthat (>= 3.0.0)

@@ -20,8 +20,10 @@
 #' @param is_organic Logical. Join the room start points with corridors before
 #'     iterative growth steps (\code{TRUE}, the default), or after
 #'     (\code{FALSE})? See details.
-#' @param is_colour Logical. Should the characters in the output be coloured
+#' @param has_colour Logical. Should the characters in the output be coloured
 #'     using \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?
+#' @param has_sfx Logical. Should sound effects be used? Defaults to
+#'     \code{TRUE}.
 #'
 #' @details
 #'   Use the WASD keys to move up, left, down and right. Use the '1' key to eat
@@ -62,7 +64,8 @@ start_game <- function(
     iterations = 4L,
     is_snake   = FALSE,
     is_organic = TRUE,
-    is_colour  = TRUE
+    has_colour = TRUE,
+    has_sfx    = TRUE
 ) {
 
   # Checks ----
@@ -84,9 +87,14 @@ start_game <- function(
     stop("Arguments 'n_row' and 'n_col' must be 10 or greater.", call. = FALSE)
   }
 
-  if (!is.logical(is_snake) | !is.logical(is_organic) | !is.logical(is_colour)) {
+  if (
+    !is.logical(is_snake) |
+    !is.logical(is_organic) |
+    !is.logical(has_colour) |
+    !is.logical(has_sfx)
+  ) {
     stop(
-      "Arguments 'is_snake', 'is_organic' and 'is_colour' must be logical.",
+      "Arguments 'is_snake', 'is_organic', 'has_colour' and 'has_sfx' must be logical.",
       call. = FALSE
     )
   }
@@ -137,7 +145,7 @@ start_game <- function(
 
     if (supports_keypress) system2("clear")
     if (is_rstudio) cat("\014")
-    .cat_map(game_map, is_colour)
+    .cat_map(game_map, has_colour)
     .cat_stats(turns, hp, gold, food)
     message(status_msg)
 
@@ -182,6 +190,7 @@ start_game <- function(
           food <- food - 1
           hp <- hp + 1
           status_msg <- "Ate apple (+1 HP)"
+          .sfx_apple_eat(has_sfx)
         }
 
         if (hp == max_hp) {
@@ -194,7 +203,7 @@ start_game <- function(
 
     # Player actions ----
 
-    game_map <- .move_player(game_map, kp, player_loc)
+    game_map <- .move_player(game_map, kp, player_loc, has_sfx)
     player_loc <- which(game_map == "@")
 
     if (kp %in% c("up", "down", "left", "right")) {
@@ -204,11 +213,13 @@ start_game <- function(
     if (length(gold_loc) > 0 && player_loc == gold_loc) {
       gold <- gold + gold_rand
       status_msg <- paste0("Found gold (+", gold_rand, " $)")
+      .sfx_gold(has_sfx)
     }
 
     if (length(food_loc) > 0 && player_loc == food_loc) {
       food <- food + 1
       status_msg <- "Collected apple (+1 a)"
+      .sfx_apple_collect(has_sfx)
     }
 
     if (length(enemy_loc) != 0 && player_loc == enemy_loc) {
@@ -222,6 +233,7 @@ start_game <- function(
 
         if (enemy_hp == 0) {
           status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
+          .sfx_enemy_defeat(has_sfx)
           enemy_loc <- NULL
           is_battle <- FALSE
         }
@@ -262,6 +274,7 @@ start_game <- function(
           if (enemy_hp == 0) {
             status_msg <- paste0("Enemy defeated! (-", start_hp - hp," HP)")
             game_map[enemy_loc] <- "@"  # overwrite position with player symbol
+            .sfx_enemy_defeat(has_sfx)
             is_battle <- FALSE
           }
 
@@ -288,6 +301,7 @@ start_game <- function(
 
     if (turns == 0) {
       message("You died (max turns)! Try again.")
+      .sfx_end(has_sfx)
       is_alive <- FALSE
     }
 
