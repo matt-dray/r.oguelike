@@ -8,13 +8,14 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Play a simple ASCII-only tile-based toy in the console, inspired heavily by roguelike games like Rogue (1980). Proof of concept.
+Play with a simple ASCII-only tile-based toy in the console, inspired heavily by roguelike games like Rogue (1980). Proof of concept.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/matt-dray/r.oguelike}
   \item \url{https://matt-dray.github.io/r.oguelike/}
+  \item \url{https://www.rostrum.blog/tags/r.oguelike/}
   \item Report bugs at \url{https://github.com/matt-dray/r.oguelike/issues}
 }
 

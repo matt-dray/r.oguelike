@@ -1,3 +1,9 @@
+# r.oguelike 0.1.0
+
+* Breaking: the `is_colour` argument to `start_game()` has been renamed with `has_colour`, which is a better verb for this purpose and matches the new `has_sfx` argument.
+* Added sound effects (#9), including `has_sfx` argument to `start_game()`.
+* Tweaked README given recent changes.
+
 # r.oguelike 0.0.0.9009
 
 * Fixed bug: ensured collecting one apple adds only one apple to the inventory (#31).

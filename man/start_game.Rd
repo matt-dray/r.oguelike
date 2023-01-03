@@ -12,7 +12,8 @@ start_game(
   iterations = 4L,
   is_snake = FALSE,
   is_organic = TRUE,
-  is_colour = TRUE
+  has_colour = TRUE,
+  has_sfx = TRUE
 )
 }
 \arguments{
@@ -37,8 +38,11 @@ random chance of becoming floor tiles themselves with each iteration.}
 iterative growth steps (\code{TRUE}, the default), or after
 (\code{FALSE})? See details.}
 
-\item{is_colour}{Logical. Should the characters in the output be coloured
+\item{has_colour}{Logical. Should the characters in the output be coloured
 using \code{\link[crayon]{crayon}} (\code{TRUE}, the default)?}
+
+\item{has_sfx}{Logical. Should sound effects be used? Defaults to
+\code{TRUE}.}
 }
 \value{
 Nothing. Clears the console and prints to it with
